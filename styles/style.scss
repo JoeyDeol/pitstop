@@ -1,0 +1,51 @@
+@import "normalize";
+@import "variables";
+@import "mixin";
+@import "typography";
+@import "components/buttons";
+@import "components/header";
+@import "components/footer";
+@import "components/graphics";
+
+/*----------------------------------------
+    all sections
+----------------------------------------*/
+.wrapper {
+    width: 80%;
+    max-width: 1150px;
+    margin: 0 auto;
+    @media (max-width: $break-large) {
+        width: 95%;
+    } 
+}
+
+
+.visuallyHidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px; }
+
+section {
+    margin-bottom: 50px;
+}
+
+.wrap--small {
+    width: 90%;
+    margin: 0 auto;
+    @media (max-width:$break-med) {
+        width: 95%;
+    }
+}
+
+img {
+    width: 100%;
+}
+
+body {
+    background: red;
+}
