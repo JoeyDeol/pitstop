@@ -15,7 +15,7 @@ pitstop.getLocation = function (){
             }
         }
     }).then((res) => {
-        console.log(res.results);
+        // console.log(res.results);
     });
 };
 
@@ -23,13 +23,16 @@ pitstop.init = function () {
     pitstop.getLocation();
     // pitstop.displayMap();
     initMap();
-    pitstop.polyLine.setMap(map);
 };
 
 // DISPLAY GOOGLE MAP CENTERED AT HACKERYOU
 pitstop.hyCoords = { lat: 43.6484248, lng: -79.39792039999999 };
 pitstop.burgerPriestCoords = { lat: 43.6483623, lng: -79.39727259999999 };
 pitstop.finchStationCoords = { lat: 43.780371, lng: -79.414676 };
+pitstop.polyLineCoords = [
+  pitstop.burgerPriestCoords,
+  pitstop.finchStationCoords
+];
 
 // https://developers.google.com/maps/documentation/javascript/adding-a-google-map
 function initMap() {
@@ -39,7 +42,7 @@ function initMap() {
     });
     
     pitstop.burgerPriestMarker = new google.maps.Marker({
-      position: pitstop.burgerPriestCoords,
+      position: pitstop.hyCoords,
       map: pitstop.sampleMap
     });
 
@@ -48,7 +51,12 @@ function initMap() {
       map: pitstop.sampleMap
     });
 
-    pitstop.polyLine = new google.maps.Polyline({
+    const flightPlanCoordinates = [
+      { lat: 43.6484248, lng: -79.39792039999999 },
+      { lat: 43.780371, lng: -79.414676 }
+    ];
+
+    const samplePoly = new google.maps.Polyline({
       path: pitstop.polyLineCoords,
       geodesic: true,
       strokeColor: "#FF0000",
@@ -56,63 +64,9 @@ function initMap() {
       strokeWeight: 2
     });
 
-  var flightPlanCoordinates = [
-    {lat: 37.772, lng: -122.214},
-    {lat: 21.291, lng: -157.821},
-    {lat: -18.142, lng: 178.431},
-    {lat: -27.467, lng: 153.027}
-  ];
-  var flightPath = new google.maps.Polyline({
-    path: flightPlanCoordinates,
-    geodesic: true,
-    strokeColor: '#FF0000',
-    strokeOpacity: 1.0,
-    strokeWeight: 2
-  });
+    samplePoly.setMap(pitstop.sampleMap);
 
-  flightPath.setMap(map);
 }
-
-// draw polyline from finch station to burger priest
-// https://developers.google.com/maps/documentation/javascript/examples/polyline-simple
-// pitstop.polyLineCoords = [ pitstop.burgerPriestCoords, pitstop.finchStationCoords ];
-
-// pitstop.polyLine = new google.maps.Polyline({
-//   path: pitstop.polyLineCoords,
-//   geodesic: true,
-//   strokeColor: "#FF0000",
-//   strokeOpacity: 1.0,
-//   strokeWeight: 2
-// });
-
-// This example creates a 2-pixel-wide red polyline showing the path of
-// the first trans-Pacific flight between Oakland, CA, and Brisbane,
-// Australia which was made by Charles Kingsford Smith.
-
-// function initMap() {
-//   var map = new google.maps.Map(document.getElementById('map'), {
-//     zoom: 3,
-//     center: {lat: 0, lng: -180},
-//     mapTypeId: 'terrain'
-//   });
-
-//   var flightPlanCoordinates = [
-//     {lat: 37.772, lng: -122.214},
-//     {lat: 21.291, lng: -157.821},
-//     {lat: -18.142, lng: 178.431},
-//     {lat: -27.467, lng: 153.027}
-//   ];
-//   var flightPath = new google.maps.Polyline({
-//     path: flightPlanCoordinates,
-//     geodesic: true,
-//     strokeColor: '#FF0000',
-//     strokeOpacity: 1.0,
-//     strokeWeight: 2
-//   });
-
-//   flightPath.setMap(map);
-// }
-
 
 // https://developers.google.com/maps/documentation/javascript/directions#DisplayingResults
 
