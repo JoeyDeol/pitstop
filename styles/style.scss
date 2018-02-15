@@ -32,6 +32,10 @@
 
 section {
     margin-bottom: 50px;
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
 }
 
 .wrap--small {
@@ -54,6 +58,7 @@ body {
     Google Maps Styles
 ----------------------------------------*/
 #map {
+    position: relative;
     height: 100%;
 }
 

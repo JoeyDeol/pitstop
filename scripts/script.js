@@ -1,8 +1,44 @@
 const pitstop = {};
 
-pitstop.getUserLocation = function (){
+pitstop.userInputs = function () {
+    $('form').on('submit', function (event) {
+        event.preventDefault();
+        const userStart = $('input[name=userStartPoint]').val();
+        const userEnd = $('input[name=userEndPoint]').val();
+        console.log(userStart);
+        console.log(userEnd);
+        const start = pitstop.getCoordsFromTextSearch(userStart);
+        const end =  pitstop.getCoordsFromTextSearch(userEnd);
+
+        $.when(start,end)
+            .then((startRes,endRes) => {
+                console.log(startRes[0].results[0].place_id);
+                console.log(endRes[0].results[0].place_id);
+                console.log(startRes[0].results[0].geometry.location.lat);
+                console.log(startRes[0].results[0].geometry.location.lng);
+                const startLat = startRes[0].results[0].geometry.location.lat;
+                const startLong = startRes[0].results[0].geometry.location.lng;
+                const endLat = endRes[0].results[0].geometry.location.lat;
+                const endLong = endRes[0].results[0].geometry.location.lng;
+                const coords = [startLat,startLong,endLat,endLong];
+                console.log(coords);
+
+                    // const placeId = res.results[0].place_id;
+                    // console.log('The following is: PlaceID, Lat and Long')
+                    // console.log(placeId);
+                    // console.log(lat);
+                    // console.log(long);
+                    // const geolocation = []
+                    // geolocation.push(lat, long);
+                    // pitstop.locationNearby(geolocation);
+                    // // pitstop.getLocationDetails(placeId);
+            });
+    })
+}
+
+pitstop.getCoordsFromTextSearch = function (location){
     // First ajax request will be pulling down information from google places through a text search that the user inputs.
-    $.ajax({
+    return $.ajax({
         url: 'https://proxy.hackeryou.com',
         method: 'GET',
         dataType: 'json',
@@ -10,22 +46,10 @@ pitstop.getUserLocation = function (){
             reqUrl: 'https://maps.googleapis.com/maps/api/place/textsearch/json',
             params: {
                 key: 'AIzaSyCYkPjAGfsJm2ow3qnk7HzHX0Q62oVdYiI',
-                query: 'Burger Priest on Queen street Toronto',
+                query: location,
             }
         }
-    }).then((res) => {
-        const placeId = res.results[0].place_id;
-        const lat = res.results[0].geometry.location.lat;
-        const long = res.results[0].geometry.location.lng;
-        console.log('The following is: PlaceID, Lat and Long')
-        console.log(placeId);
-        console.log(lat);
-        console.log(long);
-        const geolocation = []
-        geolocation.push(lat,long);
-        pitstop.locationNearby(geolocation);
-        pitstop.getLocationDetails(placeId);
-    });
+    })
 };
 
     // Create a function to request google place details api for the details of each location.
@@ -66,7 +90,7 @@ pitstop.locationNearby = function(geolocation) {
             params: {
                 key: 'AIzaSyCYkPjAGfsJm2ow3qnk7HzHX0Q62oVdYiI',
                 location: `${geolocation[0]},${geolocation[1]}`,
-                radius: 500,
+                radius: 1000,
             }
         }
     }).then((res) => {
@@ -74,6 +98,8 @@ pitstop.locationNearby = function(geolocation) {
         console.log(res.results);
     });
 };
+
+
 
 /*
  * Find midpoint between two coordinates points
@@ -116,7 +142,7 @@ function middlePoint(lat1, lng1, lat2, lng2) {
 
 
 pitstop.init = function () {
-    pitstop.getUserLocation();
+    pitstop.userInputs();
     initMap();
 };
 
@@ -160,7 +186,6 @@ function initMap() {
     });
 
     samplePoly.setMap(pitstop.sampleMap);
-
 }
 
 // https://developers.google.com/maps/documentation/javascript/directions#DisplayingResults
