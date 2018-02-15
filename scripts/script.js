@@ -115,6 +115,7 @@ function middlePoint(lat1, lng1, lat2, lng2) {
     return [lng3.toDeg(), lat3.toDeg()];
 }
 
+
 pitstop.init = function () {
     pitstop.getUserLocation();
 };
