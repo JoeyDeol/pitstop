@@ -6,8 +6,7 @@ pitstop.userInputs = function () {
         event.preventDefault();
         const userStart = $('input[name=userStartPoint]').val();
         const userEnd = $('input[name=userEndPoint]').val();
-        console.log(userStart);
-        console.log(userEnd);
+
         const start = pitstop.getCoordsFromTextSearch(userStart);
         const end =  pitstop.getCoordsFromTextSearch(userEnd);
 
@@ -22,15 +21,19 @@ pitstop.userInputs = function () {
                 const endLat = endRes[0].results[0].geometry.location.lat;
                 const endLong = endRes[0].results[0].geometry.location.lng;
                 const coords = [startLat,startLong,endLat,endLong];
-                console.log(coords);
 
                 // const middlePoint = middlePoint(coords);
                 // console.log(middlePoint);
 
                 const mid = pitstop.findMiddlePoint(coords);
-                console.log(mid);
 
+                // use findMiddlePoint() to give us x and y coords on midpoint in array
+                // generates map centered at midpoint
                 initMap(mid);
+
+                // findLocationNearby() using midway coords
+                pitstop.locationNearby(mid);
+
             });
     })
 }
@@ -135,18 +138,29 @@ pitstop.locationNearby = function(geolocation) {
           "https://maps.googleapis.com/maps/api/place/nearbysearch/json",
         params: {
           key: pitstop.lindaKey,
-          location: `${geolocation[0]},${geolocation[1]}`,
-          radius: 1000
+          location: `${geolocation[1]},${geolocation[0]}`,
+          radius: 5000
         }
       }
     }).then(res => {
-      console.log("The following is places nearby the inputted location");
-      console.log(res.results);
+    //   console.log("The following is places nearby the inputted location");
+    //   console.log(res.results);
+      const nearbyPlaces = res.results;
+        // format the lat and long into objects in the format required for creating polyline and markers
+        const nearbyPlacesCoords = nearbyPlaces.map((item) => {
+          const nearbyPlaceLat = item.geometry.location.lat;
+          const nearbyPlaceLong = item.geometry.location.lng;
+          const nearbyLatLong = [];
+          nearbyLatLong.push(nearbyPlaceLat, nearbyPlaceLong);
+          
+          return (nearbyLatLong);
+        });
+        // pitstop.plotMarkers(nearbyPlaceCoords);
+
+        // console.log(nearbyPlacesCoords);
+        pitstop.plotMarkers(nearbyPlacesCoords);
     });
 };
-
-
-
 
 
 
@@ -164,6 +178,35 @@ pitstop.polyLineCoords = [
   pitstop.finchStationCoords
 ];
 
+pitstop.burgerPriestCoords = { lat: 43.6483623, lng: -79.39727259999999 };
+
+pitstop.plotMarkers = function(coordArr) {
+    // console.log(coordArr.length);
+    // console.log(...coordArr);
+    console.log(coordArr);
+    console.log(coordArr[0]);
+    // console.log(...coordArr[0]);
+
+    // pitstop.burgerPriestMarker = new google.maps.Marker({
+    // position: pitstop.hyCoords,
+    // map: pitstop.Map
+    // });
+    for (i = 0; i < coordArr.length; i++) {
+    console.log(coordArr[i][0], coordArr[i][1]);
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(coordArr[i][0], coordArr[i][1]),
+        map: pitstop.Map
+      });
+
+      google.maps.event.addListener(marker, "click", (function(marker, i) {
+          return function() {
+            infowindow.setContent(coordArr[i][0]);
+            infowindow.open(map, marker);
+          };
+        })(marker, i));
+    }
+};
+
 // https://developers.google.com/maps/documentation/javascript/adding-a-google-map
 function initMap(midpoint) {
     console.log(midpoint);
@@ -178,10 +221,8 @@ function initMap(midpoint) {
       zoom: 12
     });
     
-    pitstop.burgerPriestMarker = new google.maps.Marker({
-      position: pitstop.hyCoords,
-      map: pitstop.Map
-    });
+
+    
 
     pitstop.finchStationMarker = new google.maps.Marker({
       position: pitstop.finchStationCoords,
@@ -189,10 +230,10 @@ function initMap(midpoint) {
     });
 
     // pitstop.createPolyLine(startCoords) {
-    //     const flightPlanCoordinates = [
-    //       { lat: 43.6484248, lng: -79.39792039999999 },
-    //       { lat: 43.780371, lng: -79.414676 }
-    //     ];
+        // const flightPlanCoordinates = [
+        //   { lat: 43.6484248, lng: -79.39792039999999 },
+        //   { lat: 43.780371, lng: -79.414676 }
+        // ];
     
     //     const samplePoly = new google.maps.Polyline({
     //       path: pitstop.polyLineCoords,
