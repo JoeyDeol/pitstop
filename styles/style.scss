@@ -31,7 +31,8 @@
     width: 1px; }
 
 section {
-    margin-bottom: 50px;
+    // margin-bottom: 50px;
+    padding: 40px;
     position: absolute;
     z-index: 10;
     top: 0;
@@ -39,7 +40,7 @@ section {
 }
 
 .wrap--small {
-    width: 90%;
+    width: 80%;
     margin: 0 auto;
     @media (max-width:$break-med) {
         width: 95%;
@@ -50,9 +51,9 @@ img {
     width: 100%;
 }
 
-body {
-    // background: red;
-}
+// main {
+//     position: relative;
+// }
 
 /*----------------------------------------
     Google Maps Styles
@@ -60,6 +61,8 @@ body {
 #map {
     position: relative;
     height: 100%;
+    //? mobile menu
+    margin-top: $header-height;
 }
 
 /* Optional: Makes the sample page fill the window. */
@@ -69,6 +72,121 @@ html, body {
     padding: 0;
 }
 
+/*----------------------------------------
+    landing page
+----------------------------------------*/
+
+.landing {
+    width: 100vw;
+    height: 100vh;
+    background: url('/assets/landing-bg.png') no-repeat;
+    background-size: cover;
+    @include flexCenter(column);
+
+    transition: all 0.5s;
+
+    .wrapper {
+        padding: 50px;
+        background: rgba($color-accent2, 0.8);
+        max-width: 360px;
+        // border-radius: 100px;
+        border: 3px solid $color-accent;
+
+    }
+
+    // show only form while in map view
+    &.minimize {
+        position: absolute;
+        top: $header-height;
+        width: initial;
+        height: initial;
+        background: none;
+        background: rgba($color-accent2, 0.8);
+        margin: 0;
+        padding: 10px;
+
+        p, h2 {
+            display: none;
+        }
+
+        .wrapper {
+            padding: 10px;
+            background: none;
+            border: none;
+        }
+
+        .form__startEnd, input[type="submit"]  {
+            margin: 0;
+        }
+
+    }
+}
+
+/*----------------------------------------
+    Form 
+----------------------------------------*/
+.form__startEnd {
+    margin-top: 80px;
+    @include flexCenter(column);
+    // > * {
+    //     display: block;
+    // }
+}
+
+input {
+    background: $color-opacity;
+    min-width: 110px;
+    border-radius: 100px;
+    border: 3px solid $color-accent;
+    margin: 5px 0 20px 0;
+    padding: 10px 20px;
+}
+
+.btn--cta {
+    background: $color-accent3;
+    color: white;
+    padding: 13px 30px;
+    margin-top: 40px;
+}
+
+.btn__showList {
+    background: $color-accent;
+    color: $color-dark;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+/*----------------------------------------
+    Resto Details
+----------------------------------------*/
+
+.restoDetailsPanel {
+    border: 1px solid pink;
+    padding: 40px;
+    position: absolute;
+    // bottom: 0;
+    right: 0;
+    // transform: translate(-50%, -50%);
+    // @include flexCenter(column);
+    text-align: left;
+    width: 100%;
+    overflow: scroll;
+    height: 80%;
+    @media (min-height: $break-small) {
+        height: 100%;
+
+    }
+}
 
 
+.restoDetailsPanel__locate {
+    background: $color-gray;
+    > * {
+
+    }
+    &:nth-child(:even) {
+        background: #B7ECE5;
+    }
+}
 

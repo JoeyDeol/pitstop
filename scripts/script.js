@@ -5,6 +5,9 @@ pitstop.lindaKey = "AIzaSyDCyp8JtEraKwveheT6vsFzLsG8e7UwG-Q";
 pitstop.userInputs = function () {
     $('form').on('submit', function (event) {
         event.preventDefault();
+        //trigger CSS changes - show map view
+        pitstop.switchToMapView();
+
         const userStart = $('input[name=userStartPoint]').val();
         const userEnd = $('input[name=userEndPoint]').val();
 
@@ -139,12 +142,16 @@ pitstop.locationNearby = function(geolocation) {
     }).then(res => {
       const nearbyPlaces = res.results;
         // Use the following functon to get the placeIds for each nearby place and send it to the LocationDetails function  
+        // make array of place ids
         const nearbyPlacesPlaceIds = nearbyPlaces.map((item) => {
             return (item.place_id);
         });
+
+        // make array of promises from place details ajax call (full objects)
         const places = nearbyPlacesPlaceIds.map(pitstop.getLocationDetails)
         $.when(...places)
             .then((...placeArgs) => {
+
                 placeArgs = placeArgs.map(el => el[0]);
                 placeArgs.forEach((res) => {
                     const name = res.result.name;
@@ -156,18 +163,19 @@ pitstop.locationNearby = function(geolocation) {
                     const phoneNumber = res.result.formatted_phone_number;
                     const website = res.result.website;
                     const mapLink = res.result.url;
-                    console.log("The following is: Formatted Address, Open Now, Rating, Price Level");
-                    console.log(name);
-                    console.log(formattedAddress);
+                    // console.log("The following is: Formatted Address, Open Now, Rating, Price Level");
+                    // console.log(name);
+                    // console.log(formattedAddress);
                     // console.log(openingNow);
                     // console.log(fullHours);
-                    console.log(rating);
-                    console.log(priceLevel);
-                    console.log(phoneNumber); 
-                    console.log(website);
-                    console.log(mapLink);
+                    // console.log(rating);
+                    // console.log(priceLevel);
+                    // console.log(phoneNumber); 
+                    // console.log(website);
+                    // console.log(mapLink);
                 });
 
+                // make array of long and lat
                 const nearbyPlacesCoords = nearbyPlaces.map((item) => {
                     const nearbyPlaceLat = item.geometry.location.lat;
                     const nearbyPlaceLong = item.geometry.location.lng;
@@ -175,6 +183,7 @@ pitstop.locationNearby = function(geolocation) {
                     nearbyLatLong.push(nearbyPlaceLat, nearbyPlaceLong);
                     return (nearbyLatLong);
                 });
+                // use long and lat to plot markers
                 pitstop.plotMarkers(nearbyPlacesCoords);
             })
         // pitstop.getLocationDetails(nearbyPlacesPlaceIds);
@@ -182,11 +191,6 @@ pitstop.locationNearby = function(geolocation) {
     });
 };
 
-
-
-pitstop.init = function () {
-    pitstop.userInputs();
-};
 
 // // DISPLAY MARKERS FORMAT
 // pitstop.hyCoords = { lat: 43.6484248, lng: -79.39792039999999 };
@@ -204,6 +208,7 @@ pitstop.plotMarkers = function(coordArr) {
     //         infowindow.setContent('Test');
     //         infowindow.open(pitstop.Map, marker);
     //       };
+            // wahtever.show(this)
     //     })(marker, i));
     }
 };
@@ -239,6 +244,30 @@ function initMap(midpoint) {
 }
 
 // https://developers.google.com/maps/documentation/javascript/directions#DisplayingResults
+
+pitstop.switchToMapView = () => {
+    // .minimize triggers changes in css - show map only, move to top left
+    $('.landing').addClass('minimize').hide();
+    $(".btn__startEnd").val('Recalculate');
+
+    // show button to show list of restos
+    
+    // STRETCH: mobile nav toggles input form 
+    $(".form__startEnd").on("submit", e => {
+      // maybe mobile menu?
+      // use slideToggle
+      //   $("button").click(function() {
+      //     $("p").slideToggle("slow");
+      //   });
+    });
+}
+
+
+
+pitstop.init = function () {
+    pitstop.userInputs();
+};
+
 
 // Document Ready Function
 $(function () {

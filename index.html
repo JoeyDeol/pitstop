@@ -7,26 +7,55 @@
     <title>Pitstop</title>
     <link rel="stylesheet" href="styles/style.css">
     <script src='https://use.fontawesome.com/8d93889061.js'></script>
-    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700i" rel="stylesheet">
 
-</head>
 
+    <!-- Changes: removed fieldsets added labels -->
 <body>
-
+    <!-- outside of main map in background -->
     <div id="map"></div>
-    <section>
-        <form action="">
-            <fieldset class="userStart">
-                <input type="text" name="userStartPoint" id="startPoint" placeholder="Please enter your starting point">
-            </fieldset>
-            <fieldset class="userEnd">
-                <input type="text" name="userEndPoint" id="endPoint" placeholder="Please enter your destination">
-            </fieldset>
-            <div class="userLocationSubmit">
-                <input type="submit" value="Find My Pitstops">
+    <main>
+
+        <!-- input form for user start and end points -->
+        <section class="landing">
+            <div class="wrapper">
+                <h2 class="heading--section landingOnly">Pitstop</h2>
+                <p class="text--regular landingOnly">Presented by Team Deol and No-Deol</p>
+    
+                <form action="" class="wrap--small form__startEnd">
+                    <label for="startPoint">Starting Point</label>
+                    <input type="text" name="userStartPoint" id="startPoint" placeholder="Please enter your starting point">
+    
+                    <label for="endPoint">Destination</label>
+                    <input type="text" name="userEndPoint" id="endPoint" placeholder="Please enter your destination">
+    
+                    <input type="submit" class="btn__startEnd btn--cta" value="Find My Pitstops">
+                </form>
             </div>
-        </form>
-    </section>
+        </section>
+        
+        <!-- list of restuarants with partial detail -->
+        <!-- <section class="restoDetailsPanel">
+            <div class="restoDetailsItem">
+                <div class="restoDetailsPanel__basicInfo">
+                    <h3 class="heading--resto heading">Jimmy's Coffee</h3>
+                    <p class="text--small rating3">****</p>
+                    <p class="text--small price">$$</p>
+                </div>
+
+                <div class="restoDetailsPanel__locate">
+                    <h3 class="heading--resto heading">Contact Info:</h3>
+                    <a href="link"class="text--regular"> <h3><span class="heading--em heading">Website: </span> link</h3></a>
+                    <p class="text--regular"><span class="heading--em heading">Phone: </span>412-444-2222</p>
+                    <p class="text--regular"><span class="heading--em heading">Address: </span>words here :D</p>
+                </div>
+                <a href="LINK" class="restoDetailsPanel__btn">Find on Google Maps</a>
+            </div>
+
+        </section> -->
+
+        <input type="submit" class="btn__showList btn--cta" value="Find My Pitstops">
+    </main>
     <!-- javascript link to jquery and file -->
     <script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='crossorigin='anonymous'></script>
 

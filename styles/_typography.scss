@@ -1,15 +1,13 @@
+
 // Normalize typography
 body {
-    font-family: $text-font;
-}
-
-html {
-    font-size: 62.5%;
+    font-family: 'Montserrat', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6, p, a, ul, li, blockquote {
     margin: 0;
     padding: 0;
+    line-height: 1;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -28,3 +26,42 @@ a {
 li {
     list-style-type: none;
 }
+
+@mixin remCalc($fontSize) {
+    font-size: ($fontSize / 16) * 1rem;
+}
+
+// $font-display : "‘Abril Fatface’, cursive";
+
+// -----------------
+// -----------------
+
+p {
+    line-height: 1.4;
+}
+
+.heading {
+    font-weight: 700;
+
+    &--resto {
+        @include remCalc(22);
+        margin: 10px 0;
+    }
+
+    &--restoName {
+        @include remCalc(18);
+    }
+}
+
+.text {
+    &--small {
+       @include remCalc(16);
+
+    }
+
+    &--regular {
+       @include remCalc(16); 
+    }
+}
+
+
