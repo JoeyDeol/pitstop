@@ -1,6 +1,6 @@
 const pitstop = {};
 
-pitstop.lindaKey = "AIzaSyANaLsqMb-Vp4_WS06TGn6F2Whc_XB8Lbc";
+pitstop.lindaKey = "AIzaSyDHgMCQripudza4pQ_EeU1PEpFxlsRiB6o";
 
 pitstop.userInputs = function () {
     $('form').on('submit', function (event) {
@@ -25,6 +25,23 @@ pitstop.userInputs = function () {
                 // findLocationNearby() using midway coords
                 pitstop.locationNearby(mid);
             });
+    });
+};
+
+// First ajax request will be pulling down information from google places through a text search that the user inputs.
+pitstop.getCoordsFromTextSearch = function (location) {
+    return $.ajax({
+        url: "https://proxy.hackeryou.com",
+        method: "GET",
+        dataType: "json",
+        data: {
+            reqUrl:
+                "https://maps.googleapis.com/maps/api/place/textsearch/json",
+            params: {
+                key: pitstop.lindaKey,
+                query: location
+            }
+        }
     });
 };
 
@@ -71,22 +88,7 @@ pitstop.findMiddlePoint = function(coord) {
     return middlePoint(...coord);
 };
 
-// First ajax request will be pulling down information from google places through a text search that the user inputs.
-pitstop.getCoordsFromTextSearch = function (location){
-    return $.ajax({
-      url: "https://proxy.hackeryou.com",
-      method: "GET",
-      dataType: "json",
-      data: {
-        reqUrl:
-          "https://maps.googleapis.com/maps/api/place/textsearch/json",
-        params: {
-          key: pitstop.lindaKey,
-          query: location
-        }
-      }
-    });
-};
+
 
 // Create a function to request google place details api for the details of each location.
 pitstop.getLocationDetails = function (place) {
@@ -156,45 +158,45 @@ pitstop.locationNearby = function(geolocation) {
                     const phoneNumber = res.result.formatted_phone_number;
                     const website = res.result.website;
                     const mapLink = res.result.url;
-                    console.log("The following is: Formatted Address, Open Now, Rating, Price Level");
-                    console.log(name);
-                    console.log(formattedAddress);
-                    // console.log(openingNow);
-                    // console.log(fullHours);
-                    console.log(rating);
-                    console.log(priceLevel);
-                    console.log(phoneNumber); 
-                    console.log(website);
-                    console.log(mapLink);
+                    // console.log("The following is: Formatted Address, Open Now, Rating, Price Level");
+                    // console.log(name);
+                    // console.log(formattedAddress);
+                    // // console.log(openingNow);
+                    // // console.log(fullHours);
+                    // console.log(rating);
+                    // console.log(priceLevel);
+                    // console.log(phoneNumber); 
+                    // console.log(website);
+                    // console.log(mapLink);
 
-                    $('.restoDetailsPanel').append(`
-                        <div class=“restoDetailsPanel__basicInfo”>
-                            <h3 class=“heading--resto heading”>${name}</h3>
-                            <p class=“text--small rating">${rating}</p>
-                            <p class=“text--small price”>${priceLevel}</p>
-                        </div>
-                        <div class=“restoDetailsPanel__locate”>
-                            <h3 class=“heading--resto heading”>Contact Info:</h3>
-                            <a href=“link”class=“text--regular”> <h3><span class=“heading--em heading”>${website} </span> link</h3></a>
-                            <p class=“text--regular”><span class=“heading--em heading”>Phone: </span>${phoneNumber}</p>
-                            <p class=“text--regular”><span class=“heading--em heading”>Address: </span>${formattedAddress}</p>
-                        </div>               
-                    `);
-                    if (priceLevel !== undefined) {
-                        $('.test').append(`<p>${priceLevel}</p>`);
-                    }
-                    if (priceLevel !== undefined) {
-                        $('.test').append(`<p>${rating}</p>`);
-                    }
-                    
-
+                    // $('.restoDetailsPanel').append(`
+                    //     <div class=“restoDetailsPanel__basicInfo”>
+                    //         <h3 class=“heading--resto heading”>${name}</h3>
+                    //         <p class=“text--small rating">${rating}</p>
+                    //         <p class=“text--small price”>${priceLevel}</p>
+                    //     </div>
+                    //     <div class=“restoDetailsPanel__locate”>
+                    //         <h3 class=“heading--resto heading”>Contact Info:</h3>
+                    //         <a href=“link”class=“text--regular”> <h3><span class=“heading--em heading”>${website} </span> link</h3></a>
+                    //         <p class=“text--regular”><span class=“heading--em heading”>Phone: </span>${phoneNumber}</p>
+                    //         <p class=“text--regular”><span class=“heading--em heading”>Address: </span>${formattedAddress}</p>
+                    //     </div>
+                    //     <a href=${mapLink} class=“restoDetailsPanel__btn”>Find on Google Maps</a>               
+                    // `);
+                    // if (priceLevel !== undefined) {
+                    //     $('.test').append(`<p>${priceLevel}</p>`);
+                    // }
+                    // if (priceLevel !== undefined) {
+                    //     $('.test').append(`<p>${rating}</p>`);
+                    // }
                 });
 
                 const nearbyPlacesCoords = nearbyPlaces.map((item) => {
                     const nearbyPlaceLat = item.geometry.location.lat;
                     const nearbyPlaceLong = item.geometry.location.lng;
+                    const nearbyPlaceName = item.name;
                     const nearbyLatLong = [];
-                    nearbyLatLong.push(nearbyPlaceLat, nearbyPlaceLong);
+                    nearbyLatLong.push(nearbyPlaceLat, nearbyPlaceLong, nearbyPlaceName);
                     return (nearbyLatLong);
                 });
                 pitstop.plotMarkers(nearbyPlacesCoords);
@@ -204,11 +206,6 @@ pitstop.locationNearby = function(geolocation) {
     });
 };
 
-
-
-pitstop.init = function () {
-    pitstop.userInputs();
-};
 
 // // DISPLAY MARKERS FORMAT
 // pitstop.hyCoords = { lat: 43.6484248, lng: -79.39792039999999 };
@@ -223,7 +220,7 @@ pitstop.plotMarkers = function(coordArr) {
     infowindow = new google.maps.InfoWindow();  
     google.maps.event.addListener(marker, "click", (function(marker, i) {
           return function() {
-            infowindow.setContent('Test');
+            infowindow.setContent(coordArr[i][2]);
             infowindow.open(pitstop.Map, marker);
           };
         })(marker, i));
@@ -261,6 +258,11 @@ function initMap(midpoint) {
 }
 
 // https://developers.google.com/maps/documentation/javascript/directions#DisplayingResults
+
+// Initializing Function
+pitstop.init = function () {
+    pitstop.userInputs();
+};
 
 // Document Ready Function
 $(function () {
