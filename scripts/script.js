@@ -1,6 +1,6 @@
 const pitstop = {};
 
-pitstop.lindaKey = "AIzaSyDCyp8JtEraKwveheT6vsFzLsG8e7UwG-Q";
+pitstop.lindaKey = "AIzaSyANaLsqMb-Vp4_WS06TGn6F2Whc_XB8Lbc";
 
 pitstop.userInputs = function () {
     $('form').on('submit', function (event) {
@@ -166,6 +166,28 @@ pitstop.locationNearby = function(geolocation) {
                     console.log(phoneNumber); 
                     console.log(website);
                     console.log(mapLink);
+
+                    $('.restoDetailsPanel').append(`
+                        <div class=“restoDetailsPanel__basicInfo”>
+                            <h3 class=“heading--resto heading”>${name}</h3>
+                            <p class=“text--small rating">${rating}</p>
+                            <p class=“text--small price”>${priceLevel}</p>
+                        </div>
+                        <div class=“restoDetailsPanel__locate”>
+                            <h3 class=“heading--resto heading”>Contact Info:</h3>
+                            <a href=“link”class=“text--regular”> <h3><span class=“heading--em heading”>${website} </span> link</h3></a>
+                            <p class=“text--regular”><span class=“heading--em heading”>Phone: </span>${phoneNumber}</p>
+                            <p class=“text--regular”><span class=“heading--em heading”>Address: </span>${formattedAddress}</p>
+                        </div>               
+                    `);
+                    if (priceLevel !== undefined) {
+                        $('.test').append(`<p>${priceLevel}</p>`);
+                    }
+                    if (priceLevel !== undefined) {
+                        $('.test').append(`<p>${rating}</p>`);
+                    }
+                    
+
                 });
 
                 const nearbyPlacesCoords = nearbyPlaces.map((item) => {
@@ -198,13 +220,13 @@ pitstop.plotMarkers = function(coordArr) {
         map: pitstop.Map
       });
 
-    // infowindow = new google.maps.InfoWindow();  
-    // google.maps.event.addListener(marker, "click", (function(marker, i) {
-    //       return function() {
-    //         infowindow.setContent('Test');
-    //         infowindow.open(pitstop.Map, marker);
-    //       };
-    //     })(marker, i));
+    infowindow = new google.maps.InfoWindow();  
+    google.maps.event.addListener(marker, "click", (function(marker, i) {
+          return function() {
+            infowindow.setContent('Test');
+            infowindow.open(pitstop.Map, marker);
+          };
+        })(marker, i));
     }
 };
 
