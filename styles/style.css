@@ -193,12 +193,6 @@ p {
 .closedNow {
   color: #dd8f8f; }
 
-button, input[type="submit"] {
-  border: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  text-transform: uppercase; }
-
 /*----------------------------------------
     all sections
 ----------------------------------------*/
@@ -235,9 +229,6 @@ section {
 img {
   width: 100%; }
 
-main {
-  position: relative; }
-
 /*----------------------------------------
     Google Maps Styles
 ----------------------------------------*/
@@ -246,6 +237,9 @@ main {
   height: 100%; }
 
 /* Optional: Makes the sample page fill the window. */
+html, body {
+  height: 100%; }
+
 /*----------------------------------------
     landing page
 ----------------------------------------*/
@@ -254,7 +248,8 @@ main {
   line-height: 0.4; }
 
 .landing {
-  position: fixed;
+  position: absolute;
+  top: 0;
   width: 100vw;
   height: 100vh;
   background: url("../assets/landing-bg.png") no-repeat;
@@ -292,7 +287,7 @@ main {
   .landing.minimize {
     position: absolute;
     top: 0px;
-    width: initial;
+    width: 300px;
     height: initial;
     background: none;
     background: rgba(171, 223, 216, 0.8);
@@ -306,6 +301,9 @@ main {
       border: none; }
     .landing.minimize .form__startEnd, .landing.minimize input[type="submit"] {
       margin: 0; }
+    .landing.minimize input[type="text"] {
+      width: 250px;
+      min-width: initial; }
 
 /*----------------------------------------
     Form 
@@ -335,11 +333,11 @@ main {
 input {
   background: rgba(255, 255, 255, 0.8);
   border-radius: 100px;
-  border: 3px solid #77EEDF;
   margin: 5px 0 20px 0;
   padding: 10px 20px; }
 
 input[type="text"] {
+  border: 3px solid #77EEDF;
   min-width: 400px; }
   @media (max-width: 700px) {
     input[type="text"] {
