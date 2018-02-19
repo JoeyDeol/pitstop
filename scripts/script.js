@@ -1,10 +1,16 @@
 const pitstop = {};
+pitstop.thiKey = "AIzaSyDCyp8JtEraKwveheT6vsFzLsG8e7UwG-Q"; //thi
+pitstop.lindaKey = "AIzaSyDzOkHWOtzDgG_6drpT4GbqgHwnTIApsTg"; //linda
+pitstop.joeyKey = "AIzaSyCYkPjAGfsJm2ow3qnk7HzHX0Q62oVdYiI";
+pitstop.currentKey = pitstop.joeyKey;
 
-pitstop.lindaKey = "AIzaSyDHgMCQripudza4pQ_EeU1PEpFxlsRiB6o";
 
 pitstop.userInputs = function () {
     $('form').on('submit', function (event) {
         event.preventDefault();
+        //trigger CSS changes - show map view
+        pitstop.switchToMapView();
+
         const userStart = $('input[name=userStartPoint]').val();
         const userEnd = $('input[name=userEndPoint]').val();
 
@@ -26,6 +32,7 @@ pitstop.userInputs = function () {
                 pitstop.locationNearby(mid);
             });
     });
+
 };
 
 // First ajax request will be pulling down information from google places through a text search that the user inputs.
@@ -89,6 +96,23 @@ pitstop.findMiddlePoint = function(coord) {
 };
 
 
+// First ajax request will be pulling down information from google places through a text search that the user inputs.
+pitstop.getCoordsFromTextSearch = function (location){
+    return $.ajax({
+      url: "https://proxy.hackeryou.com",
+      method: "GET",
+      dataType: "json",
+      data: {
+        reqUrl:
+          "https://maps.googleapis.com/maps/api/place/textsearch/json",
+        params: {
+          key: pitstop.currentKey,
+          query: location
+        }
+      }
+    });
+};
+
 
 // Create a function to request google place details api for the details of each location.
 pitstop.getLocationDetails = function (place) {
@@ -99,11 +123,11 @@ pitstop.getLocationDetails = function (place) {
       data: {
         reqUrl: "https://maps.googleapis.com/maps/api/place/details/json",
         params: {
-          key: pitstop.lindaKey,
+          key: pitstop.currentKey,
           placeid: place
         }
       }
-    })
+    });
     // .then(res => {
     // // console.log(res);
     // //   const formattedAddress = res.result.formatted_address;
@@ -132,14 +156,15 @@ pitstop.locationNearby = function(geolocation) {
         reqUrl:
           "https://maps.googleapis.com/maps/api/place/nearbysearch/json",
         params: {
-          key: pitstop.lindaKey,
+          key: pitstop.currentKey,
           location: `${geolocation[1]},${geolocation[0]}`,
           radius: 1500,
-          type: 'restaurant'
+          type: "restaurant"
         }
       }
     }).then(res => {
       const nearbyPlaces = res.results;
+
         // Use the following functon to get the placeIds for each nearby place and send it to the LocationDetails function  
         const nearbyPlacesPlaceIds = nearbyPlaces.map((item) => {
             return (item.place_id);
@@ -206,6 +231,107 @@ pitstop.locationNearby = function(geolocation) {
     });
 };
 
+      // make array of promises from place details ajax call (full objects)
+      const places = nearbyPlacesPlaceIds.map(pitstop.getLocationDetails);
+      $.when(...places).then((...placeArgs) => {
+        placeArgs = placeArgs.map(el => el[0]);
+        console.log(placeArgs);
+        placeArgs.forEach(res => {
+          const name = res.result.name;
+          const formattedAddress = res.result.formatted_address;
+          // const openNow = res.result.opening_hours.open_now;
+          // const fullHours = res.result.opening_hours.weekday_text;
+          const rating = Math.round(res.result.rating);
+          const priceLevel = res.result.price_level; // Ranges from 0 - 4
+          const phoneNumber = res.result.formatted_phone_number;
+          const website = res.result.website;
+          const mapLink = res.result.url;
+          // const openNow
+          // console.log("The following is: Formatted Address, Open Now, Rating, Price Level");
+          // console.log(name);
+          // console.log(formattedAddress);
+          // console.log(rating);
+          // console.log(priceLevel);
+          // console.log(phoneNumber);
+          // console.log(website);
+          // console.log(mapLink);
+          // console.log(openNow);
+
+          // const openSymbol = (() => {
+          //   if (openNow) {
+          //     return `<p class="openNow">Open<p/>`;
+          //   } else if (openNow === false) {
+          //     return `<p class="closedNow">Closed<p/>`;
+          //   }
+          // })();
+
+          const ratingSymbol = (() => {
+            if (rating) {
+              return `<p class="rating${rating} symbol" />`;
+            } else {
+              return "";
+            }
+          })();
+
+          const priceSymbol = (() => {
+            if (priceLevel) {
+              return `<p class="price${priceLevel} symbol" />`;
+            } else {
+              return "";
+            }
+          })();
+
+          $(".restoDetailsPanel").append(`<div class="restoDetailsItem">
+            <h3 class="heading--resto heading">${name}</h3>
+            <div class="restoDetailsPanel__basicInfo">
+
+                ${ratingSymbol}
+                ${priceSymbol}
+            </div>
+
+            <div class="restoDetailsPanel__locate">
+                <h4 class="heading--details heading">
+                Website:
+                <a href="${website}">${website}</a></h4>
+                <h4 class="heading--details heading">
+                Phone:
+                <span>${phoneNumber}</span>
+                </h4>
+                <h4 class="heading--details heading">
+                Address:
+                <p>${formattedAddress}</p>
+                </h4>
+            </div>
+            <a href="${mapLink}" class="restoDetailsPanel__btn">
+                Find on Google Maps
+            </a>
+            </div>`);
+
+          // show the "Find my pitstops" button
+          $("main").append(`<input type="submit" class="btn__showList btn--cta" value="Find My Pitstops">`);
+
+          //whe button is clicked, append items
+          $(".btn__showList").on("click", () => {
+            console.log("clicked show button");
+            $(".restoDetailsPanel").html('').slideToggle();
+          });
+        });
+
+        // make array of long and lat
+        const nearbyPlacesCoords = nearbyPlaces.map(item => {
+          const nearbyPlaceLat = item.geometry.location.lat;
+          const nearbyPlaceLong = item.geometry.location.lng;
+          const nearbyLatLong = [];
+          nearbyLatLong.push(nearbyPlaceLat, nearbyPlaceLong);
+          return nearbyLatLong;
+        });
+        // use long and lat to plot markers
+        pitstop.plotMarkers(nearbyPlacesCoords);
+      });
+      // pitstop.getLocationDetails(nearbyPlacesPlaceIds);
+      // format the lat and long into objects in the format required for creating polyline and markers
+    });
+};
 
 // // DISPLAY MARKERS FORMAT
 // pitstop.hyCoords = { lat: 43.6484248, lng: -79.39792039999999 };
@@ -217,6 +343,16 @@ pitstop.plotMarkers = function(coordArr) {
         map: pitstop.Map
       });
 
+
+    // infowindow = new google.maps.InfoWindow();  
+    // google.maps.event.addListener(marker, "click", (function(marker, i) {
+    //       return function() {
+    //         infowindow.setContent('Test');
+    //         infowindow.open(pitstop.Map, marker);
+    //       };
+            // wahtever.show(this)
+    //     })(marker, i));
+
     infowindow = new google.maps.InfoWindow();  
     google.maps.event.addListener(marker, "click", (function(marker, i) {
           return function() {
@@ -224,11 +360,13 @@ pitstop.plotMarkers = function(coordArr) {
             infowindow.open(pitstop.Map, marker);
           };
         })(marker, i));
+
     }
 };
 
 // https://developers.google.com/maps/documentation/javascript/adding-a-google-map
 function initMap(midpoint) {
+  console.log('in initmap')
     const midpointObject = {
         lat: midpoint[1],
         lng: midpoint[0]
@@ -259,10 +397,32 @@ function initMap(midpoint) {
 
 // https://developers.google.com/maps/documentation/javascript/directions#DisplayingResults
 
-// Initializing Function
+
+pitstop.switchToMapView = () => {
+    // .minimize triggers changes in css - show map only, move to top left
+    $('.landing').addClass('minimize');
+    $(".btn__startEnd").val('Recalculate');
+
+    // show button to show list of restos
+    
+    // STRETCH: mobile nav toggles input form 
+    $(".form__startEnd").on("submit", e => {
+      // maybe mobile menu?
+      // use slideToggle
+      //   $("button").click(function() {
+      //     $("p").slideToggle("slow");
+      //   });
+    });
+}
+
+
+
 pitstop.init = function () {
     pitstop.userInputs();
+    $('.restoDetailsPanel').hide();
 };
+
+
 
 // Document Ready Function
 $(function () {

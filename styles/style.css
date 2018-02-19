@@ -133,27 +133,65 @@ legend, button::-moz-focus-inner, input::-moz-focus-inner {
   box-sizing: border-box; }
 
 body {
-  font-family: "Poppins", sans-serif; }
-
-html {
-  font-size: 62.5%; }
+  font-family: 'Montserrat', sans-serif; }
 
 h1, h2, h3, h4, h5, h6, p, a, ul, li, blockquote {
   margin: 0;
-  padding: 0; }
-
-h1, h2, h3, h4, h5, h6 {
-  text-transform: capitalize; }
-
-a:visited {
-  color: black; }
+  padding: 0;
+  line-height: 1; }
 
 a {
   text-decoration: none;
-  display: inline-block; }
+  display: inline-block;
+  color: #3d6862; }
+  a :visited {
+    color: inherit; }
 
 li {
   list-style-type: none; }
+
+p {
+  line-height: 1.4; }
+
+.heading {
+  font-weight: 700; }
+  .heading--section {
+    font-size: 5rem;
+    margin-bottom: 10px; }
+    @media (max-width: 550px) {
+      .heading--section {
+        font-size: 14vw; } }
+  .heading--resto {
+    font-size: 1.375rem;
+    margin-top: 5px;
+    text-align: center; }
+  .heading--restoName {
+    font-size: 1.125rem; }
+  .heading--details {
+    font-size: 1rem;
+    margin-top: 4px;
+    line-height: 1.4;
+    font-style: italic;
+    overflow: hidden; }
+    .heading--details > * {
+      font-weight: 400;
+      font-style: initial; }
+
+.text--small {
+  font-size: 1rem;
+  margin: 5px 0; }
+
+.text--regular {
+  font-size: 1rem; }
+
+.symbol {
+  color: #F96332; }
+
+.openNow {
+  color: #77EEDF; }
+
+.closedNow {
+  color: #dd8f8f; }
 
 button, input[type="submit"] {
   border: none;
@@ -183,21 +221,22 @@ button, input[type="submit"] {
   width: 1px; }
 
 section {
-  margin-bottom: 50px;
+  padding: 40px;
   position: absolute;
-  z-index: 10;
-  top: 0;
-  left: 0; }
+  z-index: 10; }
 
 .wrap--small {
-  width: 90%;
+  width: 80%;
   margin: 0 auto; }
-  @media (max-width: 700px) {
+  @media (max-width: 550px) {
     .wrap--small {
-      width: 95%; } }
+      width: 100%; } }
 
 img {
   width: 100%; }
+
+main {
+  position: relative; }
 
 /*----------------------------------------
     Google Maps Styles
@@ -207,7 +246,193 @@ img {
   height: 100%; }
 
 /* Optional: Makes the sample page fill the window. */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0; }
+/*----------------------------------------
+    landing page
+----------------------------------------*/
+.fa.fa-flag-checkered {
+  font-size: 50px;
+  line-height: 0.4; }
+
+.landing {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: url("../assets/landing-bg.png") no-repeat;
+  background-blend-mode: color-dodge;
+  background-size: cover;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  text-align: center;
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s; }
+  .landing .wrapper {
+    padding: 50px;
+    background: rgba(255, 255, 255, 0.8);
+    max-width: 550px;
+    border: 3px solid #77EEDF; }
+    @media (min-width: 700px) {
+      .landing .wrapper {
+        padding: 50px 20px; } }
+  .landing.minimize {
+    position: absolute;
+    top: 0px;
+    width: initial;
+    height: initial;
+    background: none;
+    background: rgba(171, 223, 216, 0.8);
+    margin: 0;
+    padding: 10px; }
+    .landing.minimize p, .landing.minimize h2, .landing.minimize i {
+      display: none; }
+    .landing.minimize .wrapper {
+      padding: 10px;
+      background: none;
+      border: none; }
+    .landing.minimize .form__startEnd, .landing.minimize input[type="submit"] {
+      margin: 0; }
+
+/*----------------------------------------
+    Form 
+----------------------------------------*/
+.form__startEnd {
+  margin-top: 50px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  text-align: center;
+  width: 100%; }
+
+input {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 100px;
+  border: 3px solid #77EEDF;
+  margin: 5px 0 20px 0;
+  padding: 10px 20px; }
+
+input[type="text"] {
+  min-width: 400px; }
+  @media (max-width: 700px) {
+    input[type="text"] {
+      min-width: initial; } }
+
+.btn--cta, .restoDetailsPanel__btn {
+  background: #F96332;
+  color: white;
+  padding: 13px 30px;
+  margin-top: 40px; }
+
+.btn__showList {
+  position: absolute;
+  top: -30px;
+  right: 12px;
+  z-index: 50; }
+
+/*----------------------------------------
+    Resto Details
+----------------------------------------*/
+section.restoDetailsPanel {
+  background: white;
+  padding: 20px;
+  position: absolute;
+  top: 64px;
+  right: 0;
+  max-width: 450px;
+  text-align: left;
+  width: 100%;
+  overflow: scroll;
+  max-height: calc(100vh - 64px); }
+
+.restoDetailsItem {
+  padding-top: 15px;
+  margin-bottom: 10px; }
+  .restoDetailsItem:nth-child(even) {
+    background: #eff2f5; }
+  .restoDetailsItem h4 {
+    width: 100%; }
+
+.restoDetailsPanel__basicInfo {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin-top: 5px; }
+
+.restoDetailsPanel__basicInfo, .restoDetailsPanel__locate {
+  padding: 0 15px; }
+
+.restoDetailsPanel__btn {
+  width: 100%;
+  text-align: center;
+  background: #77EEDF;
+  color: black;
+  margin-top: 20px; }
+
+.rating5::after {
+  font-family: FontAwesome;
+  content: "\f005 \f005 \f005 \f005 \f005"; }
+
+.rating4::after {
+  font-family: FontAwesome;
+  content: "\f005 \f005 \f005 \f005"; }
+
+.rating3::after {
+  font-family: FontAwesome;
+  content: "\f005 \f005 \f005"; }
+
+.rating2::after {
+  font-family: FontAwesome;
+  content: "\f005 \f005"; }
+
+.rating1::after {
+  font-family: FontAwesome;
+  content: "\f005"; }
+
+.price4::after {
+  font-family: FontAwesome;
+  content: "\f155 \f155 \f155 \f155"; }
+
+.price3::after {
+  font-family: FontAwesome;
+  content: "\f155 \f155 \f155"; }
+
+.price2::after {
+  font-family: FontAwesome;
+  content: "\f155 \f155"; }
+
+.price1::after {
+  font-family: FontAwesome;
+  content: "\f155"; }

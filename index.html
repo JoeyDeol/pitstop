@@ -7,29 +7,41 @@
     <title>Pitstop</title>
     <link rel="stylesheet" href="styles/style.css">
     <script src='https://use.fontawesome.com/8d93889061.js'></script>
-    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700i" rel="stylesheet">
 
-</head>
 
 <body>
-
+    <!-- outside of main map in background -->
     <div id="map"></div>
-    <section>
-        <form action="">
-            <fieldset class="userStart">
-                <input type="text" name="userStartPoint" id="startPoint" placeholder="Please enter your starting point">
-            </fieldset>
-            <fieldset class="userEnd">
-                <input type="text" name="userEndPoint" id="endPoint" placeholder="Please enter your destination">
-            </fieldset>
-            <div class="userLocationSubmit">
-                <input type="submit" value="Find My Pitstops">
-            </div>
-        </form>
-    </section>
-    <section class="restoDetailsPanel">
+    <main>
 
-    </section>
+        <!-- input form for user start and end points -->
+        <section class="landing">
+            <div class="wrapper">
+                <i class="fa fa-flag-checkered" aria-hidden="true"></i>
+                <h2 class="heading--section">Pitstop</h2>
+                <p class="text--regular">Team Deol and No-Deol</p>
+    
+                <form action="" class="wrap--small form__startEnd">
+                    <label for="startPoint">Starting Point</label>
+                    <input type="text" name="userStartPoint" id="startPoint" placeholder="eg. 293 Church St, Toronto, ON">
+    
+                    <label for="endPoint">Destination</label>
+                    <input type="text" name="userEndPoint" id="endPoint" placeholder="eg. Algonquin Park Visitor Center">
+    
+                    <input type="submit" class="btn__startEnd btn--cta" value="Find My Pitstops">
+                </form>
+            </div>
+
+        </section>
+
+        <section class="restoDetailsPanel">
+
+
+        </section>
+
+    </main>
+
     <!-- javascript link to jquery and file -->
     <script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='crossorigin='anonymous'></script>
 

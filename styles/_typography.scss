@@ -1,30 +1,96 @@
+
 // Normalize typography
 body {
-    font-family: $text-font;
-}
-
-html {
-    font-size: 62.5%;
+    font-family: 'Montserrat', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6, p, a, ul, li, blockquote {
     margin: 0;
     padding: 0;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    text-transform: capitalize;
-}
-
-a:visited {
-    color: black;
+    line-height: 1;
 }
 
 a {
     text-decoration: none;
     display: inline-block;
+    color: $color-dark;
+    :visited {
+        color: inherit;
+    }
 }
 
 li {
     list-style-type: none;
 }
+
+@mixin remCalc($fontSize) {
+    font-size: ($fontSize / 16) * 1rem;
+}
+
+// $font-display : "‘Abril Fatface’, cursive";
+
+// -----------------
+// -----------------
+
+p {
+    line-height: 1.4;
+}
+
+.heading {
+    font-weight: 700;
+    &--section {
+       @include remCalc(80); 
+       margin-bottom: 10px;
+       @media (max-width: $break-small) {
+           font-size: 14vw;
+       }
+    }
+
+    &--resto {
+        @include remCalc(22);
+        margin-top: 5px;
+        text-align: center;
+    }
+
+    &--restoName {
+        @include remCalc(18);
+    }
+
+    &--details {
+        @include remCalc(16);
+        margin-top: 4px;
+        line-height: 1.4;
+        font-style: italic;
+        overflow: hidden;
+        > * {
+            font-weight: 400;
+            font-style: initial;
+        }
+    }
+}
+
+.text {
+    &--small {
+       @include remCalc(16);
+        margin: 5px 0;
+
+
+    }
+
+    &--regular {
+       @include remCalc(16); 
+    }
+}
+
+.symbol {
+    color: $color-accent3;
+}
+
+.openNow {
+    color: $color-accent;
+}
+
+.closedNow {
+    color: rgb(221, 143, 143);
+}
+
