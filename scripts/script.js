@@ -1,8 +1,15 @@
+// APIs Used:
+// Google JS Maps Library
+// Google places nearby
+// Google Places Details
+// Google text search
+
+
 const pitstop = {};
 pitstop.thiKey = "AIzaSyDCyp8JtEraKwveheT6vsFzLsG8e7UwG-Q"; //thi
 pitstop.lindaKey = "AIzaSyDzOkHWOtzDgG_6drpT4GbqgHwnTIApsTg"; //linda
 pitstop.joeyKey = "AIzaSyCYkPjAGfsJm2ow3qnk7HzHX0Q62oVdYiI";
-pitstop.currentKey = pitstop.joeyKey;
+pitstop.currentKey = pitstop.thiKey;
 
 pitstop.userInputs = function () {
     $('form').on('submit', function (event) {
@@ -108,22 +115,7 @@ pitstop.getLocationDetails = function (place) {
         }
       }
     });
-    // .then(res => {
-    // // console.log(res);
-    // //   const formattedAddress = res.result.formatted_address;
-    // //   const openingNow = res.result.opening_hours.open_now;
-    // //   const fullHours = res.result.opening_hours.weekday_text;
-    // //   const rating = res.result.rating;
-    // //   const priceLevel = res.result.price_level; // Ranges from 0 - 4
-    // //   const phoneNumber = res.result.formatted_phone_number;
-    // //   const website = res.result.website;
-    // //   const mapLink = res.result.url;
-    // //   console.log("The following is: Formatted Address, Open Now, Rating, Price Level");
-    // //   console.log(formattedAddress);
-    // //   console.log(openingNow);
-    // //   console.log(rating);
-    // //   console.log(priceLevel);
-    // });
+
 }; 
 
 // BELOW IS HOW THE AJAX REQUEST WOULD LOOK FOR NEARBY SEARCH
@@ -154,7 +146,6 @@ pitstop.locationNearby = function(geolocation) {
       const places = nearbyPlacesPlaceIds.map(pitstop.getLocationDetails);
       $.when(...places).then((...placeArgs) => {
         placeArgs = placeArgs.map(el => el[0]);
-        console.log(placeArgs);
         placeArgs.forEach(res => {
           const name = res.result.name;
           const formattedAddress = res.result.formatted_address;
@@ -165,18 +156,9 @@ pitstop.locationNearby = function(geolocation) {
           const phoneNumber = res.result.formatted_phone_number;
           const website = res.result.website;
           const mapLink = res.result.url;
-          // const openNow
-          // console.log("The following is: Formatted Address, Open Now, Rating, Price Level");
-          // console.log(name);
-          // console.log(formattedAddress);
 
-          // console.log(rating);
-          // console.log(priceLevel);
-          // console.log(phoneNumber);
-          // console.log(website);
-          // console.log(mapLink);
-          // console.log(openNow);
 
+          // stretch goal- figure out how to include openNow if no value exists
           // const openSymbol = (() => {
           //   if (openNow) {
           //     return `<p class="openNow">Open<p/>`;
@@ -192,7 +174,7 @@ pitstop.locationNearby = function(geolocation) {
               return "";
             }
           })();
-
+          // const ratingSymbol = rating ? `<p class="rating${rating} symbol" />` : "" ;
           const priceSymbol = (() => {
             if (priceLevel) {
               return `<p class="price${priceLevel} symbol" />`;
@@ -200,11 +182,11 @@ pitstop.locationNearby = function(geolocation) {
               return "";
             }
           })();
-
-          $(".restoDetailsPanel").append(`<div class="restoDetailsItem">
+          
+          $(".restoDetailsPanel").append(
+            `<div class="restoDetailsItem">
             <h3 class="heading--resto heading">${name}</h3>
             <div class="restoDetailsPanel__basicInfo">
-
                 ${ratingSymbol}
                 ${priceSymbol}
             </div>
@@ -230,23 +212,24 @@ pitstop.locationNearby = function(geolocation) {
           // show the "Find my pitstops" button
           $("main").append(`<input type="submit" class="btn__showList btn--cta" value="Find My Pitstops">`);
 
-          //whe button is clicked, append items
+          //when button is clicked show panel
           $(".btn__showList").on("click", () => {
-            console.log("clicked show button");
-            $(".restoDetailsPanel").html('').slideToggle();
+            $(".restoDetailsPanel").slideToggle('slow');
           });
+
+          // make array of long and lat
+          const nearbyPlacesCoords = nearbyPlaces.map(item => {
+            const nearbyPlaceLat = item.geometry.location.lat;
+            const nearbyPlaceLong = item.geometry.location.lng;
+            const nearbyPlaceName = item.name;
+            const nearbyLatLong = [];
+            nearbyLatLong.push(nearbyPlaceLat, nearbyPlaceLong, nearbyPlaceName);
+            return nearbyLatLong;
+          });
+          // use long and lat to plot markers
+          pitstop.plotMarkers(nearbyPlacesCoords);
         });
 
-        // make array of long and lat
-        const nearbyPlacesCoords = nearbyPlaces.map(item => {
-          const nearbyPlaceLat = item.geometry.location.lat;
-          const nearbyPlaceLong = item.geometry.location.lng;
-          const nearbyLatLong = [];
-          nearbyLatLong.push(nearbyPlaceLat, nearbyPlaceLong);
-          return nearbyLatLong;
-        });
-        // use long and lat to plot markers
-        pitstop.plotMarkers(nearbyPlacesCoords);
       });
       // pitstop.getLocationDetails(nearbyPlacesPlaceIds);
       // format the lat and long into objects in the format required for creating polyline and markers
@@ -264,14 +247,13 @@ pitstop.plotMarkers = function(coordArr) {
         map: pitstop.Map
       });
 
-    // infowindow = new google.maps.InfoWindow();  
-    // google.maps.event.addListener(marker, "click", (function(marker, i) {
-    //       return function() {
-    //         infowindow.setContent('Test');
-    //         infowindow.open(pitstop.Map, marker);
-    //       };
-            // wahtever.show(this)
-    //     })(marker, i));
+    infowindow = new google.maps.InfoWindow();  
+    google.maps.event.addListener(marker, "click", (function(marker, i) {
+          return function() {
+            infowindow.setContent(coordArr[i][2]);
+            infowindow.open(pitstop.Map, marker);
+          };
+        })(marker, i));
     }
 };
 
@@ -285,25 +267,8 @@ function initMap(midpoint) {
     // create a map centered around the midpoint of route
     pitstop.Map = new google.maps.Map(document.getElementById("map"), {
       center: midpointObject,
-      zoom: 12
+      zoom: 13
     });    
-
-    // pitstop.createPolyLine(startCoords) {
-        // const flightPlanCoordinates = [
-        //   { lat: 43.6484248, lng: -79.39792039999999 },
-        //   { lat: 43.780371, lng: -79.414676 }
-        // ];
-    
-    //     const samplePoly = new google.maps.Polyline({
-    //       path: pitstop.polyLineCoords,
-    //       geodesic: true,
-    //       strokeColor: "#FF0000",
-    //       strokeOpacity: 1.0,
-    //       strokeWeight: 2
-    //     });
-    
-    //     samplePoly.setMap(pitstop.Map);
-    // }
 }
 
 // https://developers.google.com/maps/documentation/javascript/directions#DisplayingResults
@@ -316,13 +281,7 @@ pitstop.switchToMapView = () => {
     // show button to show list of restos
     
     // STRETCH: mobile nav toggles input form 
-    $(".form__startEnd").on("submit", e => {
-      // maybe mobile menu?
-      // use slideToggle
-      //   $("button").click(function() {
-      //     $("p").slideToggle("slow");
-      //   });
-    });
+
 }
 
 

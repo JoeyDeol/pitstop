@@ -2,10 +2,7 @@
 @import "variables";
 @import "mixin";
 @import "typography";
-@import "components/buttons";
-@import "components/header";
-@import "components/footer";
-@import "components/graphics";
+
 
 /*----------------------------------------
     all sections
@@ -18,7 +15,6 @@
         width: 95%;
     } 
 }
-
 
 .visuallyHidden {
     border: 0;
@@ -51,9 +47,6 @@ img {
     width: 100%;
 }
 
-main {
-    position: relative;
-}
 
 /*----------------------------------------
     Google Maps Styles
@@ -66,10 +59,10 @@ main {
 }
 
 /* Optional: Makes the sample page fill the window. */
-// html, body {
-//     height: 100%;
+html, body {
+    height: 100%;
 
-// }
+}
 
 /*----------------------------------------
     landing page
@@ -80,7 +73,8 @@ main {
 }
 
 .landing {
-    position: fixed;
+    position: absolute;
+    top: 0;
     width: 100vw;
     height: 100vh;
     background: url('../assets/landing-bg.png') no-repeat;
@@ -106,7 +100,7 @@ main {
     &.minimize {
         position: absolute;
         top: $header-height;
-        width: initial;
+        width: 300px;
         height: initial;
         background: none;
         background: rgba($color-accent2, 0.8);
@@ -127,6 +121,11 @@ main {
             margin: 0;
         }
 
+        input[type="text"] {
+            width: 250px;
+            min-width: initial;
+        }
+
     }
 }
 
@@ -143,12 +142,12 @@ input {
     background: $color-opacity;
     
     border-radius: 100px;
-    border: 3px solid $color-accent;
     margin: 5px 0 20px 0;
     padding: 10px 20px;
 }
 
 input[type="text"] {
+    border: 3px solid $color-accent;
     min-width: 400px;
     @media (max-width:$break-med) {
         min-width: initial;
