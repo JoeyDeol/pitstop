@@ -42,8 +42,8 @@ section {
 .wrap--small {
     width: 80%;
     margin: 0 auto;
-    @media (max-width:$break-med) {
-        width: 95%;
+    @media (max-width:$break-small) {
+        width: 100%;
     }
 }
 
@@ -51,9 +51,9 @@ img {
     width: 100%;
 }
 
-// main {
-//     position: relative;
-// }
+main {
+    position: relative;
+}
 
 /*----------------------------------------
     Google Maps Styles
@@ -62,35 +62,43 @@ img {
     position: relative;
     height: 100%;
     //? mobile menu
-    margin-top: $header-height;
+    // margin-top: $header-height;
 }
 
 /* Optional: Makes the sample page fill the window. */
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
+// html, body {
+//     height: 100%;
+
+// }
 
 /*----------------------------------------
     landing page
 ----------------------------------------*/
+.fa.fa-flag-checkered {
+    font-size: 50px;
+    line-height: 0.4;
+}
 
 .landing {
+    position: fixed;
     width: 100vw;
     height: 100vh;
-    background: url('/assets/landing-bg.png') no-repeat;
+    background: url('../assets/landing-bg.png') no-repeat;
+    background-blend-mode: color-dodge;
     background-size: cover;
     @include flexCenter(column);
-
     transition: all 0.5s;
 
     .wrapper {
         padding: 50px;
-        background: rgba($color-accent2, 0.8);
-        max-width: 360px;
+        background: rgba(#fff, 0.8);
+        max-width: 550px;
         // border-radius: 100px;
         border: 3px solid $color-accent;
+
+        @media (min-width:$break-med) {
+            padding: 50px 20px;
+    }
 
     }
 
@@ -105,7 +113,7 @@ html, body {
         margin: 0;
         padding: 10px;
 
-        p, h2 {
+        p, h2 , i{
             display: none;
         }
 
@@ -126,20 +134,25 @@ html, body {
     Form 
 ----------------------------------------*/
 .form__startEnd {
-    margin-top: 80px;
+    margin-top: 50px;
     @include flexCenter(column);
-    // > * {
-    //     display: block;
-    // }
+    width: 100%;
 }
 
 input {
     background: $color-opacity;
-    min-width: 110px;
+    
     border-radius: 100px;
     border: 3px solid $color-accent;
     margin: 5px 0 20px 0;
     padding: 10px 20px;
+}
+
+input[type="text"] {
+    min-width: 400px;
+    @media (max-width:$break-med) {
+        min-width: initial;
+    }
 }
 
 .btn--cta {
@@ -150,12 +163,11 @@ input {
 }
 
 .btn__showList {
-    background: $color-accent;
-    color: $color-dark;
+    // background: $color-accent;
+    // color: $color-dark;
     position: absolute;
     top: -30px;
     right: 12px;
-    // transform: translateX(-50%);
     z-index: 50;
 }
 /*----------------------------------------
@@ -163,12 +175,12 @@ input {
 ----------------------------------------*/
 
 section.restoDetailsPanel {
-    margin-top: calc(#{$header-height} + 64px);
-    border: 1px solid darkcyan;
+    // margin-top: calc(#{$header-height} + 64px);
+    // border: 1px solid darkcyan;
     background: white;
     padding: 20px;
     position: absolute;
-    top: 0;
+    top: 64px;
     right: 0;
 
     max-width: $menu-width;
@@ -176,7 +188,7 @@ section.restoDetailsPanel {
     text-align: left;
     width: 100%;
     overflow: scroll;
-    max-height: 100vh;
+    max-height: calc(100vh - 64px);
     // @media (min-height: $break-small) {
     //     max-height: 100vh;
     // }
@@ -196,11 +208,11 @@ section.restoDetailsPanel {
     }
 }
 
-.restoDetailsPanel__basicInfo p {
-    float: left;
-    width: 70px;
-    // text-align: center;
-    min-height: 24px;
+.restoDetailsPanel__basicInfo {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    
 }
 
 .restoDetailsPanel__basicInfo, .restoDetailsPanel__locate {

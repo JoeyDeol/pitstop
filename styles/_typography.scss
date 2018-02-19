@@ -38,6 +38,13 @@ p {
 
 .heading {
     font-weight: 700;
+    &--section {
+       @include remCalc(80); 
+       margin-bottom: 10px;
+       @media (max-width: $break-small) {
+           font-size: 14vw;
+       }
+    }
 
     &--resto {
         @include remCalc(22);
@@ -54,6 +61,7 @@ p {
         margin-top: 4px;
         line-height: 1.4;
         font-style: italic;
+        overflow: hidden;
         > * {
             font-weight: 400;
             font-style: initial;
@@ -64,7 +72,7 @@ p {
 .text {
     &--small {
        @include remCalc(16);
-        color: $color-accent3;
+        margin: 5px 0;
 
 
     }
@@ -74,4 +82,15 @@ p {
     }
 }
 
+.symbol {
+    color: $color-accent3;
+}
+
+.openNow {
+    color: $color-accent;
+}
+
+.closedNow {
+    color: rgb(221, 143, 143);
+}
 

@@ -155,6 +155,12 @@ p {
 
 .heading {
   font-weight: 700; }
+  .heading--section {
+    font-size: 5rem;
+    margin-bottom: 10px; }
+    @media (max-width: 550px) {
+      .heading--section {
+        font-size: 14vw; } }
   .heading--resto {
     font-size: 1.375rem;
     margin-top: 5px;
@@ -165,17 +171,27 @@ p {
     font-size: 1rem;
     margin-top: 4px;
     line-height: 1.4;
-    font-style: italic; }
+    font-style: italic;
+    overflow: hidden; }
     .heading--details > * {
       font-weight: 400;
       font-style: initial; }
 
 .text--small {
   font-size: 1rem;
-  color: #F96332; }
+  margin: 5px 0; }
 
 .text--regular {
   font-size: 1rem; }
+
+.symbol {
+  color: #F96332; }
+
+.openNow {
+  color: #77EEDF; }
+
+.closedNow {
+  color: #dd8f8f; }
 
 button, input[type="submit"] {
   border: none;
@@ -212,34 +228,37 @@ section {
 .wrap--small {
   width: 80%;
   margin: 0 auto; }
-  @media (max-width: 700px) {
+  @media (max-width: 550px) {
     .wrap--small {
-      width: 95%; } }
+      width: 100%; } }
 
 img {
   width: 100%; }
+
+main {
+  position: relative; }
 
 /*----------------------------------------
     Google Maps Styles
 ----------------------------------------*/
 #map {
   position: relative;
-  height: 100%;
-  margin-top: 0px; }
+  height: 100%; }
 
 /* Optional: Makes the sample page fill the window. */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0; }
-
 /*----------------------------------------
     landing page
 ----------------------------------------*/
+.fa.fa-flag-checkered {
+  font-size: 50px;
+  line-height: 0.4; }
+
 .landing {
+  position: fixed;
   width: 100vw;
   height: 100vh;
-  background: url("/assets/landing-bg.png") no-repeat;
+  background: url("../assets/landing-bg.png") no-repeat;
+  background-blend-mode: color-dodge;
   background-size: cover;
   display: -webkit-box;
   display: -webkit-flex;
@@ -264,9 +283,12 @@ html, body {
   transition: all 0.5s; }
   .landing .wrapper {
     padding: 50px;
-    background: rgba(171, 223, 216, 0.8);
-    max-width: 360px;
+    background: rgba(255, 255, 255, 0.8);
+    max-width: 550px;
     border: 3px solid #77EEDF; }
+    @media (min-width: 700px) {
+      .landing .wrapper {
+        padding: 50px 20px; } }
   .landing.minimize {
     position: absolute;
     top: 0px;
@@ -276,7 +298,7 @@ html, body {
     background: rgba(171, 223, 216, 0.8);
     margin: 0;
     padding: 10px; }
-    .landing.minimize p, .landing.minimize h2 {
+    .landing.minimize p, .landing.minimize h2, .landing.minimize i {
       display: none; }
     .landing.minimize .wrapper {
       padding: 10px;
@@ -289,7 +311,7 @@ html, body {
     Form 
 ----------------------------------------*/
 .form__startEnd {
-  margin-top: 80px;
+  margin-top: 50px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -307,15 +329,21 @@ html, body {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  text-align: center; }
+  text-align: center;
+  width: 100%; }
 
 input {
   background: rgba(255, 255, 255, 0.8);
-  min-width: 110px;
   border-radius: 100px;
   border: 3px solid #77EEDF;
   margin: 5px 0 20px 0;
   padding: 10px 20px; }
+
+input[type="text"] {
+  min-width: 400px; }
+  @media (max-width: 700px) {
+    input[type="text"] {
+      min-width: initial; } }
 
 .btn--cta, .restoDetailsPanel__btn {
   background: #F96332;
@@ -324,8 +352,6 @@ input {
   margin-top: 40px; }
 
 .btn__showList {
-  background: #77EEDF;
-  color: #3d6862;
   position: absolute;
   top: -30px;
   right: 12px;
@@ -335,18 +361,16 @@ input {
     Resto Details
 ----------------------------------------*/
 section.restoDetailsPanel {
-  margin-top: calc(0px + 64px);
-  border: 1px solid darkcyan;
   background: white;
   padding: 20px;
   position: absolute;
-  top: 0;
+  top: 64px;
   right: 0;
   max-width: 450px;
   text-align: left;
   width: 100%;
   overflow: scroll;
-  max-height: 100vh; }
+  max-height: calc(100vh - 64px); }
 
 .restoDetailsItem {
   padding-top: 15px;
@@ -356,10 +380,16 @@ section.restoDetailsPanel {
   .restoDetailsItem h4 {
     width: 100%; }
 
-.restoDetailsPanel__basicInfo p {
-  float: left;
-  width: 70px;
-  min-height: 24px; }
+.restoDetailsPanel__basicInfo {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin-top: 5px; }
 
 .restoDetailsPanel__basicInfo, .restoDetailsPanel__locate {
   padding: 0 15px; }

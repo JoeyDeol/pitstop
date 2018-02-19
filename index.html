@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700i" rel="stylesheet">
 
 
-    <!-- Changes: removed fieldsets added labels -->
 <body>
     <!-- outside of main map in background -->
     <div id="map"></div>
@@ -19,15 +18,16 @@
         <!-- input form for user start and end points -->
         <section class="landing">
             <div class="wrapper">
-                <h2 class="heading--section landingOnly">Pitstop</h2>
-                <p class="text--regular landingOnly">Presented by Team Deol and No-Deol</p>
+                <i class="fa fa-flag-checkered" aria-hidden="true"></i>
+                <h2 class="heading--section">Pitstop</h2>
+                <p class="text--regular">Team Deol and No-Deol</p>
     
                 <form action="" class="wrap--small form__startEnd">
                     <label for="startPoint">Starting Point</label>
-                    <input type="text" name="userStartPoint" id="startPoint" placeholder="Please enter your starting point">
+                    <input type="text" name="userStartPoint" id="startPoint" placeholder="eg. 293 Church St, Toronto, ON">
     
                     <label for="endPoint">Destination</label>
-                    <input type="text" name="userEndPoint" id="endPoint" placeholder="Please enter your destination">
+                    <input type="text" name="userEndPoint" id="endPoint" placeholder="eg. Algonquin Park Visitor Center">
     
                     <input type="submit" class="btn__startEnd btn--cta" value="Find My Pitstops">
                 </form>
