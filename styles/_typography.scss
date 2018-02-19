@@ -10,17 +10,13 @@ h1, h2, h3, h4, h5, h6, p, a, ul, li, blockquote {
     line-height: 1;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    text-transform: capitalize;
-}
-
-a:visited {
-    color: black;
-}
-
 a {
     text-decoration: none;
     display: inline-block;
+    color: $color-dark;
+    :visited {
+        color: inherit;
+    }
 }
 
 li {
@@ -45,17 +41,31 @@ p {
 
     &--resto {
         @include remCalc(22);
-        margin: 10px 0;
+        margin-top: 5px;
+        text-align: center;
     }
 
     &--restoName {
         @include remCalc(18);
+    }
+
+    &--details {
+        @include remCalc(16);
+        margin-top: 4px;
+        line-height: 1.4;
+        font-style: italic;
+        > * {
+            font-weight: 400;
+            font-style: initial;
+        }
     }
 }
 
 .text {
     &--small {
        @include remCalc(16);
+        color: $color-accent3;
+
 
     }
 

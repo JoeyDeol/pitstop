@@ -35,8 +35,8 @@ section {
     padding: 40px;
     position: absolute;
     z-index: 10;
-    top: 0;
-    left: 0;
+    // top: 0;
+    // left: 0;
 }
 
 .wrap--small {
@@ -153,40 +153,112 @@ input {
     background: $color-accent;
     color: $color-dark;
     position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: -30px;
+    right: 12px;
+    // transform: translateX(-50%);
+    z-index: 50;
 }
 /*----------------------------------------
     Resto Details
 ----------------------------------------*/
 
-.restoDetailsPanel {
-    border: 1px solid pink;
-    padding: 40px;
+section.restoDetailsPanel {
+    margin-top: calc(#{$header-height} + 64px);
+    border: 1px solid darkcyan;
+    background: white;
+    padding: 20px;
     position: absolute;
-    // bottom: 0;
+    top: 0;
     right: 0;
-    // transform: translate(-50%, -50%);
-    // @include flexCenter(column);
+
+    max-width: $menu-width;
+
     text-align: left;
     width: 100%;
     overflow: scroll;
-    height: 80%;
-    @media (min-height: $break-small) {
-        height: 100%;
+    max-height: 100vh;
+    // @media (min-height: $break-small) {
+    //     max-height: 100vh;
+    // }
+}
 
+.restoDetailsItem {
+    // border: 1px solid orange;
+    // padding: 10px 10px 0 10px;
+    padding-top: 15px;
+    margin-bottom: 10px;
+    &:nth-child(even) {
+        background: $color-gray;
+    }
+
+    h4 {
+        width: 100%;
     }
 }
 
-
-.restoDetailsPanel__locate {
-    background: $color-gray;
-    > * {
-
-    }
-    &:nth-child(:even) {
-        background: #B7ECE5;
-    }
+.restoDetailsPanel__basicInfo p {
+    float: left;
+    width: 70px;
+    // text-align: center;
+    min-height: 24px;
 }
 
+.restoDetailsPanel__basicInfo, .restoDetailsPanel__locate {
+    padding: 0 15px;
+}
+
+.restoDetailsPanel__btn {
+    @extend .btn--cta;
+    width: 100%;
+    text-align: center;
+    background: $color-accent;
+    color: black;
+    margin-top: 20px;
+    // margin: 0;
+}   
+
+.rating5::after {
+    font-family: FontAwesome;
+    content: "\f005 \f005 \f005 \f005 \f005";
+}
+
+.rating4::after {
+    font-family: FontAwesome;
+    content: "\f005 \f005 \f005 \f005";
+}
+
+.rating3::after {
+    font-family: FontAwesome;
+    content: "\f005 \f005 \f005";
+}
+
+.rating2::after {
+    font-family: FontAwesome;
+    content: "\f005 \f005";
+}
+
+.rating1::after {
+    font-family: FontAwesome;
+    content: "\f005";
+}
+
+
+.price4::after {
+    font-family: FontAwesome;
+    content: "\f155 \f155 \f155 \f155";
+}
+
+.price3::after {
+    font-family: FontAwesome;
+    content: "\f155 \f155 \f155";
+}
+
+.price2::after {
+    font-family: FontAwesome;
+    content: "\f155 \f155";
+}
+
+.price1::after {
+    font-family: FontAwesome;
+    content: "\f155";
+}

@@ -140,15 +140,12 @@ h1, h2, h3, h4, h5, h6, p, a, ul, li, blockquote {
   padding: 0;
   line-height: 1; }
 
-h1, h2, h3, h4, h5, h6 {
-  text-transform: capitalize; }
-
-a:visited {
-  color: black; }
-
 a {
   text-decoration: none;
-  display: inline-block; }
+  display: inline-block;
+  color: #3d6862; }
+  a :visited {
+    color: inherit; }
 
 li {
   list-style-type: none; }
@@ -160,12 +157,22 @@ p {
   font-weight: 700; }
   .heading--resto {
     font-size: 1.375rem;
-    margin: 10px 0; }
+    margin-top: 5px;
+    text-align: center; }
   .heading--restoName {
     font-size: 1.125rem; }
+  .heading--details {
+    font-size: 1rem;
+    margin-top: 4px;
+    line-height: 1.4;
+    font-style: italic; }
+    .heading--details > * {
+      font-weight: 400;
+      font-style: initial; }
 
 .text--small {
-  font-size: 1rem; }
+  font-size: 1rem;
+  color: #F96332; }
 
 .text--regular {
   font-size: 1rem; }
@@ -200,9 +207,7 @@ button, input[type="submit"] {
 section {
   padding: 40px;
   position: absolute;
-  z-index: 10;
-  top: 0;
-  left: 0; }
+  z-index: 10; }
 
 .wrap--small {
   width: 80%;
@@ -259,7 +264,7 @@ html, body {
   transition: all 0.5s; }
   .landing .wrapper {
     padding: 50px;
-    background: rgba(183, 236, 229, 0.8);
+    background: rgba(171, 223, 216, 0.8);
     max-width: 360px;
     border: 3px solid #77EEDF; }
   .landing.minimize {
@@ -268,7 +273,7 @@ html, body {
     width: initial;
     height: initial;
     background: none;
-    background: rgba(183, 236, 229, 0.8);
+    background: rgba(171, 223, 216, 0.8);
     margin: 0;
     padding: 10px; }
     .landing.minimize p, .landing.minimize h2 {
@@ -312,7 +317,7 @@ input {
   margin: 5px 0 20px 0;
   padding: 10px 20px; }
 
-.btn--cta {
+.btn--cta, .restoDetailsPanel__btn {
   background: #F96332;
   color: white;
   padding: 13px 30px;
@@ -320,31 +325,84 @@ input {
 
 .btn__showList {
   background: #77EEDF;
-  color: #252628;
+  color: #3d6862;
   position: absolute;
-  bottom: 20px;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%); }
+  top: -30px;
+  right: 12px;
+  z-index: 50; }
 
 /*----------------------------------------
     Resto Details
 ----------------------------------------*/
-.restoDetailsPanel {
-  border: 1px solid pink;
-  padding: 40px;
+section.restoDetailsPanel {
+  margin-top: calc(0px + 64px);
+  border: 1px solid darkcyan;
+  background: white;
+  padding: 20px;
   position: absolute;
+  top: 0;
   right: 0;
+  max-width: 450px;
   text-align: left;
   width: 100%;
   overflow: scroll;
-  height: 80%; }
-  @media (min-height: 550px) {
-    .restoDetailsPanel {
-      height: 100%; } }
+  max-height: 100vh; }
 
-.restoDetailsPanel__locate {
-  background: #f5efef; }
-  .restoDetailsPanel__locate:nth-child(:even) {
-    background: #B7ECE5; }
+.restoDetailsItem {
+  padding-top: 15px;
+  margin-bottom: 10px; }
+  .restoDetailsItem:nth-child(even) {
+    background: #eff2f5; }
+  .restoDetailsItem h4 {
+    width: 100%; }
+
+.restoDetailsPanel__basicInfo p {
+  float: left;
+  width: 70px;
+  min-height: 24px; }
+
+.restoDetailsPanel__basicInfo, .restoDetailsPanel__locate {
+  padding: 0 15px; }
+
+.restoDetailsPanel__btn {
+  width: 100%;
+  text-align: center;
+  background: #77EEDF;
+  color: black;
+  margin-top: 20px; }
+
+.rating5::after {
+  font-family: FontAwesome;
+  content: "\f005 \f005 \f005 \f005 \f005"; }
+
+.rating4::after {
+  font-family: FontAwesome;
+  content: "\f005 \f005 \f005 \f005"; }
+
+.rating3::after {
+  font-family: FontAwesome;
+  content: "\f005 \f005 \f005"; }
+
+.rating2::after {
+  font-family: FontAwesome;
+  content: "\f005 \f005"; }
+
+.rating1::after {
+  font-family: FontAwesome;
+  content: "\f005"; }
+
+.price4::after {
+  font-family: FontAwesome;
+  content: "\f155 \f155 \f155 \f155"; }
+
+.price3::after {
+  font-family: FontAwesome;
+  content: "\f155 \f155 \f155"; }
+
+.price2::after {
+  font-family: FontAwesome;
+  content: "\f155 \f155"; }
+
+.price1::after {
+  font-family: FontAwesome;
+  content: "\f155"; }

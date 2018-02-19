@@ -1,7 +1,7 @@
 const pitstop = {};
 
-pitstop.lindaKey = "AIzaSyDCyp8JtEraKwveheT6vsFzLsG8e7UwG-Q";
-
+// pitstop.lindaKey = "AIzaSyDCyp8JtEraKwveheT6vsFzLsG8e7UwG-Q"; //thi
+pitstop.lindaKey = "AIzaSyDzOkHWOtzDgG_6drpT4GbqgHwnTIApsTg"; //linda
 pitstop.userInputs = function () {
     $('form').on('submit', function (event) {
         event.preventDefault();
@@ -29,6 +29,7 @@ pitstop.userInputs = function () {
                 pitstop.locationNearby(mid);
             });
     });
+
 };
 
 
@@ -163,16 +164,55 @@ pitstop.locationNearby = function(geolocation) {
                     const phoneNumber = res.result.formatted_phone_number;
                     const website = res.result.website;
                     const mapLink = res.result.url;
-                    // console.log("The following is: Formatted Address, Open Now, Rating, Price Level");
-                    // console.log(name);
-                    // console.log(formattedAddress);
-                    // console.log(openingNow);
-                    // console.log(fullHours);
-                    // console.log(rating);
-                    // console.log(priceLevel);
-                    // console.log(phoneNumber); 
-                    // console.log(website);
-                    // console.log(mapLink);
+                    console.log("The following is: Formatted Address, Open Now, Rating, Price Level");
+                    console.log(name);
+                    console.log(formattedAddress);
+ 
+                    console.log(rating);
+                    console.log(priceLevel);
+                    console.log(phoneNumber); 
+                    console.log(website);
+                    console.log(mapLink);
+
+                    // show the "Find my pitstops" button 
+                    $('main').append(
+                        `<input type="submit" class="btn__showList btn--cta" value="Find My Pitstops">`
+                    );
+
+                    //whe button is clicked, append items
+                    $(".btn__showList").on(
+                        "click",
+                        () => {
+                        console.log(
+                            "clicked show button"
+                        );
+
+                        $(".restoDetailsPanel").append(`<div class="restoDetailsItem">
+                        <div class="restoDetailsPanel__basicInfo clearfix">
+                            <h3 class="heading--resto heading">${name}</h3>
+                            <p class="text--small rating${rating}" />
+                            <p class="text--small price${priceLevel}" />
+                        </div>
+    
+                        <div class="restoDetailsPanel__locate">
+                            <h4 class="heading--details heading">
+                            Website:
+                            <a href="link">${website}</a></h4>
+                            <h4 class="heading--details heading">
+                            Phone:
+                            <a href="link">${phoneNumber}</a>
+                            </h4>
+                            <h4 class="heading--details heading">
+                            Address:
+                            <p>${formattedAddress}</p>
+                            </h4>
+                        </div>
+                        <a href="${mapLink}" class="restoDetailsPanel__btn">
+                            Find on Google Maps
+                        </a>
+                        </div>`).show();
+                        }
+                    );
                 });
 
                 // make array of long and lat
@@ -266,6 +306,7 @@ pitstop.switchToMapView = () => {
 
 pitstop.init = function () {
     pitstop.userInputs();
+    $('.restoDetailsPanel').hide();
 };
 
 
