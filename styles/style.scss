@@ -154,6 +154,10 @@ input[type="text"] {
     }
 }
 
+input[type="submit"] {
+    border: none;
+}
+
 .btn--cta {
     background: $color-accent3;
     color: white;
