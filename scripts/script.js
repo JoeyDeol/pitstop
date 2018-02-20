@@ -8,8 +8,9 @@
 const pitstop = {};
 pitstop.thiKey = "AIzaSyDCyp8JtEraKwveheT6vsFzLsG8e7UwG-Q"; //thi
 pitstop.lindaKey = "AIzaSyDzOkHWOtzDgG_6drpT4GbqgHwnTIApsTg"; //linda
-pitstop.joeyKey = "AIzaSyCYkPjAGfsJm2ow3qnk7HzHX0Q62oVdYiI";
-pitstop.currentKey = pitstop.thiKey;
+pitstop.joeyKey = "AIzaSyCYkPjAGfsJm2ow3qnk7HzHX0Q62oVdYiI"; // Joey
+pitstop.joey2Key = "AIzaSyChv5l9YHQ-H1rQdoq-mP3_1P1XEMwd3zY"; // Joey 2
+pitstop.currentKey = pitstop.joey2Key;
 
 
 pitstop.userInputs = function () {
@@ -161,67 +162,6 @@ pitstop.locationNearby = function(geolocation) {
         const nearbyPlacesPlaceIds = nearbyPlaces.map((item) => {
             return (item.place_id);
         });
-        const places = nearbyPlacesPlaceIds.map(pitstop.getLocationDetails)
-        $.when(...places)
-            .then((...placeArgs) => {
-                placeArgs = placeArgs.map(el => el[0]);
-                placeArgs.forEach((res) => {
-                    const name = res.result.name;
-                    const formattedAddress = res.result.formatted_address;
-                    // const openingNow = res.result.opening_hours.open_now;
-                    // const fullHours = res.result.opening_hours.weekday_text;
-                    const rating = res.result.rating;
-                    const priceLevel = res.result.price_level; // Ranges from 0 - 4
-                    const phoneNumber = res.result.formatted_phone_number;
-                    const website = res.result.website;
-                    const mapLink = res.result.url;
-                    // console.log("The following is: Formatted Address, Open Now, Rating, Price Level");
-                    // console.log(name);
-                    // console.log(formattedAddress);
-                    // // console.log(openingNow);
-                    // // console.log(fullHours);
-                    // console.log(rating);
-                    // console.log(priceLevel);
-                    // console.log(phoneNumber); 
-                    // console.log(website);
-                    // console.log(mapLink);
-
-                    // $('.restoDetailsPanel').append(`
-                    //     <div class=“restoDetailsPanel__basicInfo”>
-                    //         <h3 class=“heading--resto heading”>${name}</h3>
-                    //         <p class=“text--small rating">${rating}</p>
-                    //         <p class=“text--small price”>${priceLevel}</p>
-                    //     </div>
-                    //     <div class=“restoDetailsPanel__locate”>
-                    //         <h3 class=“heading--resto heading”>Contact Info:</h3>
-                    //         <a href=“link”class=“text--regular”> <h3><span class=“heading--em heading”>${website} </span> link</h3></a>
-                    //         <p class=“text--regular”><span class=“heading--em heading”>Phone: </span>${phoneNumber}</p>
-                    //         <p class=“text--regular”><span class=“heading--em heading”>Address: </span>${formattedAddress}</p>
-                    //     </div>
-                    //     <a href=${mapLink} class=“restoDetailsPanel__btn”>Find on Google Maps</a>               
-                    // `);
-                    // if (priceLevel !== undefined) {
-                    //     $('.test').append(`<p>${priceLevel}</p>`);
-                    // }
-                    // if (priceLevel !== undefined) {
-                    //     $('.test').append(`<p>${rating}</p>`);
-                    // }
-                });
-
-                const nearbyPlacesCoords = nearbyPlaces.map((item) => {
-                    const nearbyPlaceLat = item.geometry.location.lat;
-                    const nearbyPlaceLong = item.geometry.location.lng;
-                    const nearbyPlaceName = item.name;
-                    const nearbyLatLong = [];
-                    nearbyLatLong.push(nearbyPlaceLat, nearbyPlaceLong, nearbyPlaceName);
-                    return (nearbyLatLong);
-                });
-                pitstop.plotMarkers(nearbyPlacesCoords);
-            })
-        // pitstop.getLocationDetails(nearbyPlacesPlaceIds);
-        // format the lat and long into objects in the format required for creating polyline and markers
-    });
-};
 
       // make array of promises from place details ajax call (full objects)
       const places = nearbyPlacesPlaceIds.map(pitstop.getLocationDetails);
@@ -237,19 +177,6 @@ pitstop.locationNearby = function(geolocation) {
           const phoneNumber = res.result.formatted_phone_number;
           const website = res.result.website;
           const mapLink = res.result.url;
-
-          // const openNow
-          // console.log("The following is: Formatted Address, Open Now, Rating, Price Level");
-          // console.log(name);
-          // console.log(formattedAddress);
-          // console.log(rating);
-          // console.log(priceLevel);
-          // console.log(phoneNumber);
-          // console.log(website);
-          // console.log(mapLink);
-          // console.log(openNow);
-
-
 
           // stretch goal- figure out how to include openNow if no value exists
           // const openSymbol = (() => {
@@ -363,7 +290,6 @@ pitstop.plotMarkers = function(coordArr) {
 
 // https://developers.google.com/maps/documentation/javascript/adding-a-google-map
 function initMap(midpoint) {
-  console.log('in initmap')
     const midpointObject = {
         lat: midpoint[1],
         lng: midpoint[0]
