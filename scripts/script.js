@@ -10,7 +10,7 @@ pitstop.thiKey = "AIzaSyDCyp8JtEraKwveheT6vsFzLsG8e7UwG-Q"; //thi
 pitstop.lindaKey = "AIzaSyDzOkHWOtzDgG_6drpT4GbqgHwnTIApsTg"; //linda
 pitstop.joeyKey = "AIzaSyCYkPjAGfsJm2ow3qnk7HzHX0Q62oVdYiI"; // Joey
 pitstop.joey2Key = "AIzaSyChv5l9YHQ-H1rQdoq-mP3_1P1XEMwd3zY"; // Joey 2
-pitstop.currentKey = pitstop.lindaKey;
+pitstop.currentKey = pitstop.thiKey;
 
 
 pitstop.userInputs = function () {
@@ -156,7 +156,8 @@ pitstop.locationNearby = function (geolocation) {
     $.when(...places).then((...placeArgs) => {
       placeArgs = placeArgs.map(el => el[0]);
       $(".restoDetailsPanel").empty();
-      $(".restoDetailsPanel").slideToggle('slow');
+      $(".landing.minimize").hide();
+      $(".restoDetailsPanel").slideToggle();
       
       placeArgs.forEach(res => {
         const name = res.result.name;
@@ -203,6 +204,7 @@ pitstop.locationNearby = function (geolocation) {
         //when button is clicked show panel
         $(".btn__showList").on("click", () => {
           $(".restoDetailsPanel").slideToggle('slow');
+          $('.landing.minimize').hide();
         });
 
         // make array of long and lat
@@ -260,15 +262,17 @@ pitstop.switchToMapView = () => {
   // .minimize triggers changes in css - show map only, move to top left
   $('.landing').addClass('minimize');
   $(".btn__startEnd").val('Recalculate');
+  // $(".restoDetailsPanel").hide();
+  $('.showFormBtn').on('click', () => {
+      $('.landing.minimize').slideToggle(50);
+      $(".restoDetailsPanel").hide();
+  });
 }
-
-
 
 pitstop.init = function () {
   pitstop.userInputs();
   $('.restoDetailsPanel').hide();
 };
-
 
 // Document Ready Function
 $(function () {

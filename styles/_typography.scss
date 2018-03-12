@@ -99,3 +99,12 @@ p {
     color: rgb(221, 143, 143);
 }
 
+h1 {
+    display: inline-block;
+    margin-left: 20px;
+    position: absolute;
+    top: 17px;
+    @media(max-width: 540px) {
+        display: none;
+    }
+}
