@@ -184,6 +184,10 @@ p {
 .text--regular {
   font-size: 1rem; }
 
+.text--blurb {
+  font-size: 1.25rem;
+  margin-top: 12px; }
+
 .symbol {
   color: #F96332; }
 
