@@ -297,7 +297,7 @@ function initMap(midpoint) {
     // create a map centered around the midpoint of route
     pitstop.Map = new google.maps.Map(document.getElementById("map"), {
       center: midpointObject,
-      zoom: 13
+      zoom: 12
     });    
 }
 
