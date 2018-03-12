@@ -80,6 +80,11 @@ p {
     &--regular {
        @include remCalc(16); 
     }
+
+    &--blurb {
+        @include remCalc(20); 
+        margin-top: 12px;
+    }
 }
 
 .symbol {
