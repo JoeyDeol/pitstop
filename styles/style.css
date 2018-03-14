@@ -231,6 +231,9 @@ section {
   padding: 40px;
   position: absolute;
   z-index: 10; }
+  @media (max-width: 550px) {
+    section {
+      padding: 0; } }
 
 .wrap--small {
   width: 80%;
@@ -247,7 +250,8 @@ img {
 ----------------------------------------*/
 #map {
   position: relative;
-  height: 100%; }
+  height: calc( 100vh - 66px);
+  margin-top: 66px; }
 
 /* Optional: Makes the sample page fill the window. */
 html, body {
@@ -295,7 +299,7 @@ html, body {
     border: 3px solid #77EEDF; }
     @media (min-width: 700px) {
       .landing .wrapper {
-        padding: 50px 20px; } }
+        padding: 50px 0; } }
   .landing.minimize {
     position: absolute;
     top: 66px;
@@ -322,15 +326,18 @@ html, body {
         .landing.minimize input[type="text"] {
           width: 280px; } }
 
-.showFormBtn {
+.btn__showForm {
   display: inline-block;
+  color: black;
+  background: #abdfd8;
   border: 1px solid black;
   padding: 13px 40px;
   min-height: 40px;
   margin: 11px 0 11px 10px;
-  border-radius: 100px;
-  background: #abdfd8;
-  color: black; }
+  border-radius: 100px; }
+  @media (max-width: 550px) {
+    .btn__showForm {
+      padding: 13px 10px; } }
 
 .mobileBar {
   width: 100%;
@@ -378,13 +385,21 @@ input[type="text"] {
       min-width: initial; } }
 
 input[type="submit"] {
-  border: none; }
+  border: none;
+  margin-top: 40px; }
 
 .btn--cta, .restoDetailsPanel__btn {
-  background: #F96332;
+  display: inline-block;
   color: white;
-  padding: 13px 30px;
-  margin-top: 40px; }
+  background: #F96332;
+  border: 1px solid transparent;
+  padding: 13px 40px;
+  min-height: 40px;
+  margin: 11px 0 11px 10px;
+  border-radius: 100px; }
+  @media (max-width: 550px) {
+    .btn--cta, .restoDetailsPanel__btn {
+      padding: 13px 10px; } }
 
 .btn__showList {
   position: absolute;
