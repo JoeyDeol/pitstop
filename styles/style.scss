@@ -33,6 +33,9 @@ section {
     z-index: 10;
     // top: 0;
     // left: 0;
+    @media (max-width: $break-small) {
+        padding: 0;
+    }
 }
 
 .wrap--small {
@@ -53,9 +56,9 @@ img {
 ----------------------------------------*/
 #map {
     position: relative;
-    height: 100%;
+    height: calc( 100vh - 66px );
     //? mobile menu
-    // margin-top: $header-height;
+    margin-top: $header-height;
 }
 
 /* Optional: Makes the sample page fill the window. */
@@ -91,15 +94,14 @@ html, body {
         border: 3px solid $color-accent;
 
         @media (min-width:$break-med) {
-            padding: 50px 20px;
-    }
-
+            padding: 50px 0;
+        }
     }
 
     // show only form while in map view
     &.minimize {
         position: absolute;
-        top: 66px;
+        top: $header-height;
         width: 300px;
         height: initial;
         background: rgba($color-accent2, 0.8);
@@ -127,7 +129,7 @@ html, body {
 
         @media (max-width: $break-small) {
             width: 100%;
-            top: 66px;
+            top: $header-height;
             input[type="text"] {
                 width: 280px;
             }
@@ -135,20 +137,13 @@ html, body {
     }
 }
 
-.showFormBtn {
-    display: inline-block;
-    border: 1px solid black;
-    padding: 13px 40px;
-    min-height: 40px;
-    margin: 11px 0 11px 10px;
-    border-radius: 100px;
-    background: $color-accent2;
-    color:black;
+.btn__showForm {
+    @include btn(black, $color-accent2, black);
 }
 
 .mobileBar {
     width: 100%;
-    height: 66px;
+    height: $header-height;
     background: rgba($color-accent2, 0.8);
     position: absolute;
     top: 0;
@@ -180,13 +175,15 @@ input[type="text"] {
 
 input[type="submit"] {
     border: none;
+    margin-top: 40px;
 }
 
 .btn--cta {
-    background: $color-accent3;
-    color: white;
-    padding: 13px 30px;
-    margin-top: 40px;
+    // background: $color-accent3;
+    // color: white;
+    // padding: 13px 30px;
+    
+    @include btn(white, $color-accent3, transparent);
 }
 
 .btn__showList {

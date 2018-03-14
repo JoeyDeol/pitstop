@@ -10,7 +10,7 @@ pitstop.thiKey = "AIzaSyDCyp8JtEraKwveheT6vsFzLsG8e7UwG-Q"; //thi
 pitstop.lindaKey = "AIzaSyDzOkHWOtzDgG_6drpT4GbqgHwnTIApsTg"; //linda
 pitstop.joeyKey = "AIzaSyCYkPjAGfsJm2ow3qnk7HzHX0Q62oVdYiI"; // Joey
 pitstop.joey2Key = "AIzaSyChv5l9YHQ-H1rQdoq-mP3_1P1XEMwd3zY"; // Joey 2
-pitstop.currentKey = pitstop.thiKey;
+pitstop.currentKey = pitstop.joeyKey;
 
 
 pitstop.userInputs = function () {
@@ -52,6 +52,10 @@ pitstop.userInputs = function () {
         initMap(firstPlacePastHalf);
         // findLocationNearby() using midway coords
         pitstop.locationNearby(firstPlacePastHalf);
+      })
+      .fail((error) => {
+        console.log(error);
+        alert("Unable to communicate with Google Maps. API Key has reached quota, check back tomorrow!")
       });
   });
 };
@@ -84,7 +88,7 @@ pitstop.getDirections = (userStart, userEnd) => {
       reqUrl:
         "https://maps.googleapis.com/maps/api/directions/json",
       params: {
-        key: pitstop.lindaKey,
+        key: pitstop.currentKey,
         origin: userStart,
         destination: userEnd,
       }
@@ -94,21 +98,21 @@ pitstop.getDirections = (userStart, userEnd) => {
 
 
 // First ajax request will be pulling down information from google places through a text search that the user inputs.
-pitstop.getCoordsFromTextSearch = function (location) {
-  return $.ajax({
-    url: "https://proxy.hackeryou.com",
-    method: "GET",
-    dataType: "json",
-    data: {
-      reqUrl:
-        "https://maps.googleapis.com/maps/api/place/textsearch/json",
-      params: {
-        key: pitstop.currentKey,
-        query: location
-      }
-    }
-  });
-};
+// pitstop.getCoordsFromTextSearch = function (location) {
+//   return $.ajax({
+//     url: "https://proxy.hackeryou.com",
+//     method: "GET",
+//     dataType: "json",
+//     data: {
+//       reqUrl:
+//         "https://maps.googleapis.com/maps/api/place/textsearch/json",
+//       params: {
+//         key: pitstop.currentKey,
+//         query: location
+//       }
+//     }
+//   });
+// };
 
 
 // Create a function to request google place details api for the details of each location.
@@ -146,7 +150,9 @@ pitstop.locationNearby = function (geolocation) {
     }
   }).then(res => {
     const nearbyPlaces = res.results;
-    // Use the following function to get the placeIds for each nearby place and send it to the LocationDetails function  
+    
+
+    // Use the following function to get the placeIds for each nearby place and send it to the LocationDetails function
     const nearbyPlacesPlaceIds = nearbyPlaces.map((item) => {
       return (item.place_id);
     });
@@ -158,6 +164,11 @@ pitstop.locationNearby = function (geolocation) {
       $(".restoDetailsPanel").empty();
       $(".landing.minimize").hide();
       $(".restoDetailsPanel").slideToggle();
+
+      // show the "Find my pitstops" button, only if it doesn't already exist
+      if ($('.btn__showList').length === 0) {
+        $("main").append(`<input type="submit" class="btn__showList btn--cta" value="Find My Pitstops">`);
+      }
       
       placeArgs.forEach(res => {
         const name = res.result.name;
@@ -184,10 +195,16 @@ pitstop.locationNearby = function (geolocation) {
                   Website:
                   <a href="${website}">${website}</a></h4>`
                 : ''}
-                <h4 class="heading--details heading">
-                Phone:
-                <span>${phoneNumber}</span>
-                </h4>
+
+                ${
+                  phoneNumber ?
+                  `<h4 class="heading--details heading">
+                  Phone:
+                  <span>${phoneNumber}</span>
+                  </h4>`
+                  : ""
+                }
+                
                 <h4 class="heading--details heading">
                 Address:
                 <p>${formattedAddress}</p>
@@ -197,15 +214,6 @@ pitstop.locationNearby = function (geolocation) {
                 Find on Google Maps
             </a>
             </div>`);
-
-        // show the "Find my pitstops" button
-        $("main").append(`<input type="submit" class="btn__showList btn--cta" value="Find My Pitstops">`);
-
-        //when button is clicked show panel
-        $(".btn__showList").on("click", () => {
-          $(".restoDetailsPanel").slideToggle('slow');
-          $('.landing.minimize').hide();
-        });
 
         // make array of long and lat
         const nearbyPlacesCoords = nearbyPlaces.map(item => {
@@ -219,6 +227,12 @@ pitstop.locationNearby = function (geolocation) {
         // use long and lat to plot markers
         pitstop.plotMarkers(nearbyPlacesCoords);
       });
+
+      // if there are no resturants at midpoint, append an error message
+      if (res.results.length === 0) {
+        console.log('no restaurants found in the midpoint of this route! Please try again.')
+        $(".restoDetailsPanel").append("<p>No restaurants found in the midpoint of this route! Please try again.</p>");
+      }
 
     });
 
@@ -262,11 +276,6 @@ pitstop.switchToMapView = () => {
   // .minimize triggers changes in css - show map only, move to top left
   $('.landing').addClass('minimize');
   $(".btn__startEnd").val('Recalculate');
-  // $(".restoDetailsPanel").hide();
-  $('.showFormBtn').on('click', () => {
-      $('.landing.minimize').slideToggle(50);
-      $(".restoDetailsPanel").hide();
-  });
 }
 
 pitstop.init = function () {
@@ -274,7 +283,21 @@ pitstop.init = function () {
   $('.restoDetailsPanel').hide();
 };
 
+pitstop.events = () => {
+  //when button is clicked show panel
+  $("main").on("click", ".btn__showList", () => {
+    $(".restoDetailsPanel").slideToggle('slow');
+    $('.landing.minimize').hide();
+  });
+
+  $('.btn__showForm').on('click', () => {
+    $('.landing.minimize').slideToggle(50);
+    $(".restoDetailsPanel").hide();
+  });
+
+}
 // Document Ready Function
 $(function () {
   pitstop.init();
+  pitstop.events();
 }); 
