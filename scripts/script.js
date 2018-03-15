@@ -167,7 +167,7 @@ pitstop.locationNearby = function (geolocation) {
 
       // show the "Find my pitstops" button, only if it doesn't already exist
       if ($('.btn__showList').length === 0) {
-        $("main").append(`<input type="submit" class="btn__showList btn--cta" value="Find My Pitstops">`);
+        $("main").append(`<input type="submit" class="btn__showList" value="My Pitstops">`);
       }
       
       placeArgs.forEach(res => {
