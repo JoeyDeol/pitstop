@@ -268,7 +268,6 @@ html, body {
   position: absolute;
   top: 0;
   width: 100vw;
-  height: 100vh;
   background: url("../assets/landing-bg.png") no-repeat;
   background-size: cover;
   display: -webkit-box;
@@ -385,27 +384,24 @@ input[type="text"] {
       min-width: initial; } }
 
 input[type="submit"] {
-  border: none;
   margin-top: 40px; }
 
-.btn--cta, .restoDetailsPanel__btn {
+.btn__showList {
   display: inline-block;
-  color: white;
-  background: #F96332;
-  border: 1px solid transparent;
+  color: #F96332;
+  background: white;
+  border: 1px solid #F96332;
   padding: 13px 40px;
   min-height: 40px;
   margin: 11px 0 11px 10px;
-  border-radius: 100px; }
-  @media (max-width: 550px) {
-    .btn--cta, .restoDetailsPanel__btn {
-      padding: 13px 10px; } }
-
-.btn__showList {
+  border-radius: 100px;
   position: absolute;
   top: -30px;
   right: 12px;
   z-index: 50; }
+  @media (max-width: 550px) {
+    .btn__showList {
+      padding: 13px 10px; } }
 
 /*----------------------------------------
     Resto Details
@@ -445,11 +441,22 @@ section.restoDetailsPanel {
   padding: 0 15px; }
 
 .restoDetailsPanel__btn {
-  width: 100%;
+  display: inline-block;
+  color: white;
+  background: #F96332;
+  border: 1px solid transparent;
+  padding: 13px 40px;
+  min-height: 40px;
+  margin: 11px 0 11px 10px;
+  border-radius: 100px;
+  width: calc(100% - 20px);
   text-align: center;
   background: #77EEDF;
   color: black;
-  margin-top: 20px; }
+  margin: 40px 10px 10px 10px; }
+  @media (max-width: 550px) {
+    .restoDetailsPanel__btn {
+      padding: 13px 10px; } }
 
 .rating5::after {
   font-family: FontAwesome;

@@ -79,7 +79,6 @@ html, body {
     position: absolute;
     top: 0;
     width: 100vw;
-    height: 100vh;
     background: url('../assets/landing-bg.png') no-repeat;
     // background-blend-mode: color-dodge;
     background-size: cover;
@@ -174,21 +173,12 @@ input[type="text"] {
 }
 
 input[type="submit"] {
-    border: none;
+    // border: none;
     margin-top: 40px;
 }
 
-.btn--cta {
-    // background: $color-accent3;
-    // color: white;
-    // padding: 13px 30px;
-    
-    @include btn(white, $color-accent3, transparent);
-}
-
 .btn__showList {
-    // background: $color-accent;
-    // color: $color-dark;
+    @include btn($color-accent3, white, $color-accent3);
     position: absolute;
     top: -30px;
     right: 12px;
@@ -199,8 +189,6 @@ input[type="submit"] {
 ----------------------------------------*/
 
 section.restoDetailsPanel {
-    // margin-top: calc(#{$header-height} + 64px);
-    // border: 1px solid darkcyan;
     background: white;
     padding: 20px;
     position: absolute;
@@ -244,13 +232,12 @@ section.restoDetailsPanel {
 }
 
 .restoDetailsPanel__btn {
-    @extend .btn--cta;
-    width: 100%;
+    @include btn(white ,$color-accent3, transparent);
+    width: calc(100% - 20px);
     text-align: center;
     background: $color-accent;
     color: black;
-    margin-top: 20px;
-    // margin: 0;
+    margin: 40px 10px 10px 10px;
 }   
 
 .rating5::after {
