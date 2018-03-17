@@ -228,7 +228,6 @@ h1 {
   width: 1px; }
 
 section {
-  padding: 40px;
   position: absolute;
   z-index: 10; }
   @media (max-width: 550px) {
@@ -253,7 +252,6 @@ img {
   height: calc( 100vh - 66px);
   margin-top: 66px; }
 
-/* Optional: Makes the sample page fill the window. */
 /*----------------------------------------
     landing page
 ----------------------------------------*/
@@ -263,10 +261,7 @@ img {
 
 .landing {
   position: absolute;
-  top: 0;
-  width: 100vw;
-  background: url("../assets/landing-bg.png") no-repeat;
-  background-size: cover;
+  min-height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -281,10 +276,37 @@ img {
   -ms-flex-direction: column;
   flex-direction: column;
   text-align: center;
+  top: 0;
+  width: 100vw;
+  background: url("../assets/landing-bg.png") no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
   -webkit-transition: all 0.5s;
   -o-transition: all 0.5s;
   transition: all 0.5s; }
   .landing .wrapper {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    text-align: center;
     padding: 50px;
     background: rgba(255, 255, 255, 0.8);
     max-width: 550px;
