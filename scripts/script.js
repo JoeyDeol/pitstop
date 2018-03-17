@@ -10,7 +10,7 @@ pitstop.thiKey = "AIzaSyDCyp8JtEraKwveheT6vsFzLsG8e7UwG-Q"; //thi
 pitstop.lindaKey = "AIzaSyDzOkHWOtzDgG_6drpT4GbqgHwnTIApsTg"; //linda
 pitstop.joeyKey = "AIzaSyCYkPjAGfsJm2ow3qnk7HzHX0Q62oVdYiI"; // Joey
 pitstop.joey2Key = "AIzaSyChv5l9YHQ-H1rQdoq-mP3_1P1XEMwd3zY"; // Joey 2
-pitstop.currentKey = pitstop.joeyKey;
+pitstop.currentKey = pitstop.lindaKey;
 
 
 pitstop.userInputs = function () {
