@@ -28,7 +28,7 @@
 
 section {
     // margin-bottom: 50px;
-    padding: 40px;
+    // padding: 40px;
     position: absolute;
     z-index: 10;
     // top: 0;
@@ -71,6 +71,8 @@ img {
 
 .landing {
     position: absolute;
+    min-height: 100vh;
+    @include flexCenter(column);
     top: 0;
     width: 100vw;
     background: url('../assets/landing-bg.png') no-repeat;
@@ -80,6 +82,7 @@ img {
     transition: all 0.5s;
 
     .wrapper {
+        @include flexCenter(column);
         padding: 50px;
         background: rgba(#fff, 0.8);
         max-width: 550px;
