@@ -26,18 +26,6 @@
     position: absolute;
     width: 1px; }
 
-section {
-    // margin-bottom: 50px;
-    // padding: 40px;
-    position: absolute;
-    z-index: 10;
-    // top: 0;
-    // left: 0;
-    @media (max-width: $break-small) {
-        padding: 0;
-    }
-}
-
 .wrap--small {
     width: 80%;
     margin: 0 auto;
@@ -71,22 +59,24 @@ img {
 
 .landing {
     position: absolute;
-    min-height: 100vh;
-    @include flexCenter(column);
     top: 0;
+    min-height: 100vh;
     width: 100vw;
-    background: url('../assets/landing-bg.png') no-repeat;
-    // background-blend-mode: color-dodge;
-    background-size: cover;
     @include flexCenter(column);
+    background: url('../assets/landing-bg.png') no-repeat;
+    background-size: cover;
     transition: all 0.5s;
+    z-index: 10;
+
+    @media (max-width: $break-small) {
+        padding: 0;
+    }
 
     .wrapper {
         @include flexCenter(column);
         padding: 50px;
         background: rgba(#fff, 0.8);
         max-width: 550px;
-        // border-radius: 100px;
         border: 3px solid $color-accent;
 
         @media (min-width:$break-med) {
@@ -103,6 +93,7 @@ img {
         background: rgba($color-accent2, 0.8);
         margin: 0;
         padding: 10px;
+        min-height: initial;
 
         p, h2 , i{
             display: none;
