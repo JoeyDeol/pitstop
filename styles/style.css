@@ -227,13 +227,6 @@ h1 {
   position: absolute;
   width: 1px; }
 
-section {
-  position: absolute;
-  z-index: 10; }
-  @media (max-width: 550px) {
-    section {
-      padding: 0; } }
-
 .wrap--small {
   width: 80%;
   margin: 0 auto; }
@@ -261,33 +254,36 @@ img {
 
 .landing {
   position: absolute;
+  top: 0;
   min-height: 100vh;
+  width: 100vw;
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
+  -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
   -webkit-box-align: center;
+  -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
   text-align: center;
-  top: 0;
-  width: 100vw;
   background: url("../assets/landing-bg.png") no-repeat;
   background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
   -webkit-transition: all 0.5s;
   -o-transition: all 0.5s;
-  transition: all 0.5s; }
+  transition: all 0.5s;
+  z-index: 10; }
+  @media (max-width: 550px) {
+    .landing {
+      padding: 0; } }
   .landing .wrapper {
     display: -webkit-box;
     display: -webkit-flex;
@@ -321,7 +317,8 @@ img {
     height: initial;
     background: rgba(171, 223, 216, 0.8);
     margin: 0;
-    padding: 10px; }
+    padding: 10px;
+    min-height: initial; }
     .landing.minimize p, .landing.minimize h2, .landing.minimize i {
       display: none; }
     .landing.minimize .wrapper {
@@ -366,16 +363,20 @@ img {
 .form__startEnd {
   margin-top: 50px;
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
+  -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
   -webkit-box-align: center;
+  -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
   text-align: center;
@@ -439,9 +440,11 @@ section.restoDetailsPanel {
 
 .restoDetailsPanel__basicInfo {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
   margin-top: 5px; }
