@@ -217,16 +217,6 @@ h1 {
     .wrapper {
       width: 95%; } }
 
-.visuallyHidden {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px; }
-
 .wrap--small {
   width: 80%;
   margin: 0 auto; }
