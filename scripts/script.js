@@ -23,8 +23,8 @@ pitstop.userInputs = function () {
     const userEnd = $('input[name=userEndPoint]').val();
 
     // get coords from text search (promise)
-    const start = pitstop.getCoordsFromTextSearch(userStart);
-    const end = pitstop.getCoordsFromTextSearch(userEnd);
+    // const start = pitstop.getCoordsFromTextSearch(userStart);
+    // const end = pitstop.getCoordsFromTextSearch(userEnd);
 
     const midpointPromise = pitstop.getDirections(userStart, userEnd);
     $.when(midpointPromise)
