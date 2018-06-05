@@ -5,31 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Pitstop</title>
+    <!-- Link to Custom Style Sheet -->
     <link rel="stylesheet" href="styles/style.css">
+    <!-- Link to Font Awesome -->
     <script src='https://use.fontawesome.com/8d93889061.js'></script>
+    <!-- Link to Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700i" rel="stylesheet">
 
-
 <body>
-    <!-- outside of main map in background -->
+    <!-- Div to be populated by generated Google Map -->
     <div id="map"></div>
     <main>
-
-        <!-- input form for user start and end points -->
-
+        <!-- Navigation for when map is active -->
         <div class="mobileBar">
             <nav>
                 <a href="#" class="btn__showForm" id="showFormBtn">Recalculate</a>
                 <h1>Pitstop</h1>
             </nav>
-        </div>    
+        </div>
+        <!-- Landing Page Section -->
         <section class="landing">
             <div class="wrapper">
                 <i class="fa fa-flag-checkered" aria-hidden="true"></i>
                 <h2 class="heading--section">Pitstop</h2>
                 <p class="text--regular">Created by: <a href="http://lindazhao.com">Linda Zhao</a> and <a href="http://joeydeol.com">Joey Deol</a></p>
                 <p class="text--blurb">Need a place to eat? <strong>Find a Pitstop!</strong></p>
-    
+                <!-- Form to collect User inputs -->
                 <form action="" class="wrap--small form__startEnd">
                     <label for="startPoint">Starting Point</label>
                     <input type="text" name="userStartPoint" id="startPoint" placeholder="eg. 293 Church St, Brampton, ON">
@@ -41,22 +42,19 @@
                 </form>
             </div>
         </section>
-
+        <!-- Restaurant Details Section -->
         <section id="restoDetailsPanel" class="restoDetailsPanel">
-
-
         </section>
-
     </main>
 
-    <!-- javascript link to jquery and file -->
+    <!-- Link to jQuery Library -->
     <script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='crossorigin='anonymous'></script>
 
 
     <!-- Link to Google Maps Geometry Library -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzOkHWOtzDgG_6drpT4GbqgHwnTIApsTg&libraries=geometry"></script>
     
-
+    <!-- Link to Custom JavaScript file -->
     <script src="scripts/script.js"></script>
 </body>
 </html> 

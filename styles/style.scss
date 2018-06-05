@@ -125,7 +125,13 @@ img {
 }
 
 .btn__showForm {
-    @include btn(black, $color-accent2, black);
+    @include btn(black, $color-opacity, $color-accent);
+    transition: all 0.5s;
+        &:hover, &:focus {
+        background-color: $color-accent3;
+        border: 1px solid $color-accent3;
+        color: $color-gray;
+    }
 }
 
 .mobileBar {
@@ -161,8 +167,14 @@ input[type="text"] {
 }
 
 input[type="submit"] {
-    // border: none;
+    border: 1px solid $color-accent3;
     margin-top: 40px;
+    transition: all 0.5s;
+    &:hover, &:focus {
+        background-color: $color-accent3;
+        border: 1px solid $color-accent3;
+        color: $color-gray;
+    }
 }
 
 .btn__showList {
